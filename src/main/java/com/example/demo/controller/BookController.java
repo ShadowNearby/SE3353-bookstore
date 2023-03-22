@@ -1,14 +1,14 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Book;
-import com.example.demo.entity.Tag;
 import com.example.demo.service.BookService;
-import com.example.demo.service.TagService;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@Transactional
 public class BookController {
 
     private final BookService bookService;

@@ -1,16 +1,20 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Book;
 import com.example.demo.entity.User;
 import com.example.demo.request.ForgetForm;
 import com.example.demo.request.LoginForm;
 import com.example.demo.request.RegisterForm;
+import com.example.demo.request.UserPutForm;
 import com.example.demo.service.UserService;
 import com.example.demo.util.Message;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+
 @RestController
+@Transactional
 public class UserController {
     private final UserService userService;
 
@@ -18,9 +22,19 @@ public class UserController {
         this.userService = userService;
     }
 
+    @RequestMapping(value = "/api/users", method = RequestMethod.GET)
+    public Set<User> getAllUsers() {
+        return userService.getAllUsers();
+    }
+
     @RequestMapping(value = "/api/user", method = RequestMethod.POST)
     public Boolean handleLogin(@RequestBody @NotNull LoginForm loginForm) {
         return userService.LoginCheck(loginForm.getAccount(), loginForm.getPassword());
+    }
+
+    @RequestMapping(value = "/api/user/put", method = RequestMethod.PUT)
+    public Message handleRegister(@RequestBody @NotNull UserPutForm userPutForm) {
+        return new Message(userService.handleUserPut(userPutForm));
     }
 
     @RequestMapping(value = "/api/user/add", method = RequestMethod.POST)

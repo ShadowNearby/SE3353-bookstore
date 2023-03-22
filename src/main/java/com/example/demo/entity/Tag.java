@@ -1,11 +1,14 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "tag")
 public class Tag {
@@ -17,7 +20,8 @@ public class Tag {
     @Column(name = "content", nullable = false, unique = true)
     private String content;
 
-    @ManyToMany(mappedBy = "tags")
+    @JsonIgnoreProperties(value = {"tags"})
+    @ManyToMany(mappedBy = "tags", cascade = CascadeType.ALL)
     private List<Book> books;
 
     public Tag(String content) {

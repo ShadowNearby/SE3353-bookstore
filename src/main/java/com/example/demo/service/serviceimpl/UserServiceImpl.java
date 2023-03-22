@@ -4,11 +4,13 @@ import com.example.demo.dao.UserDao;
 import com.example.demo.entity.User;
 import com.example.demo.request.ForgetForm;
 import com.example.demo.request.RegisterForm;
+import com.example.demo.request.UserPutForm;
 import com.example.demo.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -51,6 +53,17 @@ public class UserServiceImpl implements UserService {
             return "账户对应邮箱不正确";
         user.get().setPassword(forgetForm.getPassword());
         userDao.updateUser(user.get());
+        return "OK";
+    }
+
+    @Override
+    public Set<User> getAllUsers() {
+        return userDao.getAllUsers();
+    }
+
+    @Override
+    public String handleUserPut(UserPutForm userPutForm) {
+        userDao.updateUser(userPutForm.getUser());
         return "OK";
     }
 }

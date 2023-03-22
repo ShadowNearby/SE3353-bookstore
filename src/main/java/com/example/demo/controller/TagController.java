@@ -2,12 +2,14 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Tag;
 import com.example.demo.service.TagService;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Transactional
 public class TagController {
     private final TagService tagService;
 

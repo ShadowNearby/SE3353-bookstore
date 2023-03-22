@@ -1,9 +1,11 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "receiver")
 public class Receiver {
@@ -16,6 +18,7 @@ public class Receiver {
     private String address;
     @Column(name = "phone", length = 64, nullable = false, unique = true)
     private String phone;
-    @OneToOne(mappedBy = "receiver", cascade = CascadeType.REMOVE)
-    private Order order;
+//    @JsonIgnoreProperties(value = {"receiver"})
+//    @OneToOne(mappedBy = "receiver", cascade = CascadeType.REMOVE)
+//    private Order order;
 }

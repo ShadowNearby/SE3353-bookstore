@@ -7,7 +7,9 @@ import com.example.demo.request.RegisterForm;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -28,6 +30,11 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public User getUserById(Long id) {
+        return userRepository.getUserById(id);
+    }
+
+    @Override
     public void addUser(RegisterForm registerForm) {
         Date data = new Date();
         User user = new User(registerForm.getAccount(), registerForm.getPassword(), registerForm.getEmail(), registerForm.getRole(), data);
@@ -42,5 +49,10 @@ public class UserDaoImpl implements UserDao {
     @Override
     public Optional<User> findUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
+    }
+
+    @Override
+    public Set<User> getAllUsers() {
+        return new HashSet<>(userRepository.findAll());
     }
 }

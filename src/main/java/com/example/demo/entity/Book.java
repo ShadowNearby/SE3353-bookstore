@@ -1,13 +1,16 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "book")
 public class Book {
@@ -28,10 +31,12 @@ public class Book {
     private Double price;
     @Column(name = "inventory", length = 8, nullable = false)
     private Integer inventory;
+    @JsonIgnoreProperties(value = {"books"})
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book_tag",
-            joinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"))
+            inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"),
+            joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id")
+    )
     private List<Tag> tags;
 
     public Book(String name, String image, String description, String author, String ISBN, Double price, Integer inventory, List<Tag> tags) {
