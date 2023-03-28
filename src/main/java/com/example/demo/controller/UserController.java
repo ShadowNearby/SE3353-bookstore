@@ -1,12 +1,12 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.User;
-import com.example.demo.request.ForgetForm;
-import com.example.demo.request.LoginForm;
-import com.example.demo.request.RegisterForm;
-import com.example.demo.request.UserPutForm;
 import com.example.demo.service.UserService;
 import com.example.demo.util.Message;
+import com.example.demo.util.request.ForgetForm;
+import com.example.demo.util.request.LoginForm;
+import com.example.demo.util.request.RegisterForm;
+import com.example.demo.util.request.UserPutForm;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;

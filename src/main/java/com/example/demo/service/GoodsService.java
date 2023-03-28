@@ -1,8 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Goods;
-import com.example.demo.request.AddGoodsForm;
-import com.example.demo.request.IdForm;
+import com.example.demo.util.request.AddGoodsForm;
+import com.example.demo.util.request.IdForm;
 
 import java.util.List;
 import java.util.Set;

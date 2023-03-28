@@ -3,7 +3,9 @@ package com.example.demo.dao.daoimpl;
 import com.example.demo.dao.UserDao;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.request.RegisterForm;
+import com.example.demo.util.request.RegisterForm;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -36,8 +38,9 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void addUser(RegisterForm registerForm) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Date data = new Date();
-        User user = new User(registerForm.getAccount(), registerForm.getPassword(), registerForm.getEmail(), registerForm.getRole(), data);
+        User user = new User(registerForm.getAccount(), passwordEncoder.encode(registerForm.getPassword()), registerForm.getEmail(), registerForm.getRole(), data);
         userRepository.save(user);
     }
 

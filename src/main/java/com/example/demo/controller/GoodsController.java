@@ -1,9 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Goods;
-import com.example.demo.request.AddGoodsForm;
-import com.example.demo.request.IdForm;
 import com.example.demo.service.GoodsService;
+import com.example.demo.util.request.AddGoodsForm;
+import com.example.demo.util.request.IdForm;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Order;
-import com.example.demo.request.AddOrderForm;
+import com.example.demo.util.request.AddOrderForm;
 
 import java.util.Set;
 

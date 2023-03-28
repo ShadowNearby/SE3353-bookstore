@@ -42,9 +42,9 @@ public class BookController {
     public void addBook(@RequestParam("name") String name, @RequestParam("image") String image,
                         @RequestParam("desc") String desc, @RequestParam("author") String author,
                         @RequestParam("isbn") String isbn, @RequestParam("price") Double price,
-                        @RequestParam("inventory") Integer inventory, @RequestParam("tagNames") List<String> tagNames
+                        @RequestParam("inventory") Integer inventory, @RequestParam("tagNames") String tagName
     ) {
-        bookService.addBook(name, image, desc, author, isbn, price, inventory, tagNames);
+        bookService.addBook(name, image, desc, author, isbn, price, inventory, tagName);
     }
 
     @RequestMapping(value = "/api/book/addinv", method = RequestMethod.POST)

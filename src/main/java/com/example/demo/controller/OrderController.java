@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Order;
-import com.example.demo.request.AddOrderForm;
 import com.example.demo.service.OrderService;
+import com.example.demo.util.request.AddOrderForm;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 

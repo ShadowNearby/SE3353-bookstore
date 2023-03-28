@@ -1,9 +1,9 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.User;
-import com.example.demo.request.ForgetForm;
-import com.example.demo.request.RegisterForm;
-import com.example.demo.request.UserPutForm;
+import com.example.demo.util.request.ForgetForm;
+import com.example.demo.util.request.RegisterForm;
+import com.example.demo.util.request.UserPutForm;
 
 import java.util.Set;
 

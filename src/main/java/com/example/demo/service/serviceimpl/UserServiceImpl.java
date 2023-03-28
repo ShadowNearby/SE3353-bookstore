@@ -2,10 +2,12 @@ package com.example.demo.service.serviceimpl;
 
 import com.example.demo.dao.UserDao;
 import com.example.demo.entity.User;
-import com.example.demo.request.ForgetForm;
-import com.example.demo.request.RegisterForm;
-import com.example.demo.request.UserPutForm;
 import com.example.demo.service.UserService;
+import com.example.demo.util.request.ForgetForm;
+import com.example.demo.util.request.RegisterForm;
+import com.example.demo.util.request.UserPutForm;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -15,10 +17,12 @@ import java.util.Set;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserDao userDao;
+    private final PasswordEncoder passwordEncoder;
 
 
-    public UserServiceImpl(UserDao userDao) {
+    public UserServiceImpl(UserDao userDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
+        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
     @Override
@@ -26,7 +30,8 @@ public class UserServiceImpl implements UserService {
         Optional<User> user = userDao.findUserByAccount(account);
         if (user.isEmpty())
             return false;
-        return Objects.equals(user.get().getPassword(), password);
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.matches(password, user.get().getPassword());
     }
 
     @Override
@@ -51,7 +56,7 @@ public class UserServiceImpl implements UserService {
             return "账户不存在";
         if (!Objects.equals(user.get().getEmail(), forgetForm.getEmail()))
             return "账户对应邮箱不正确";
-        user.get().setPassword(forgetForm.getPassword());
+        user.get().setPassword(passwordEncoder.encode(forgetForm.getPassword()));
         userDao.updateUser(user.get());
         return "OK";
     }
@@ -63,7 +68,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String handleUserPut(UserPutForm userPutForm) {
-        userDao.updateUser(userPutForm.getUser());
+//        userDao.getUserById();
         return "OK";
     }
 }

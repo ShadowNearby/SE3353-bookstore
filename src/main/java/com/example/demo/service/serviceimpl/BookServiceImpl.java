@@ -45,11 +45,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void addBook(String name, String image, String desc, String author, String isbn, Double price, Integer inventory, List<String> tagNames) {
-        List<Tag> tags = new ArrayList<Tag>();
-        for (String tagName : tagNames) {
-            tags.add(tagDao.getTagByContent(tagName));
-        }
+    public void addBook(String name, String image, String desc, String author, String isbn, Double price, Integer inventory, String tagName) {
+
+        Tag tag = tagDao.getTagByContent(tagName);
+        List<Tag> tags = new ArrayList<>();
+        tags.add(tag);
         bookDao.addBook(new Book(name, image, desc, author, isbn, price, inventory, tags));
     }
 

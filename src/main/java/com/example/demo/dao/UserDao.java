@@ -1,7 +1,7 @@
 package com.example.demo.dao;
 
 import com.example.demo.entity.User;
-import com.example.demo.request.RegisterForm;
+import com.example.demo.util.request.RegisterForm;
 
 import java.util.Optional;
 import java.util.Set;

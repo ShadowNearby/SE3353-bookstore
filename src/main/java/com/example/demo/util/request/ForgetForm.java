@@ -1,10 +1,9 @@
-package com.example.demo.request;
+package com.example.demo.util.request;
 
-public class RegisterForm {
+public class ForgetForm {
     private String account;
     private String password;
     private String email;
-    private Boolean role;
 
     public String getAccount() {
         return account;
@@ -16,9 +15,5 @@ public class RegisterForm {
 
     public String getEmail() {
         return email;
-    }
-
-    public Boolean getRole() {
-        return role;
     }
 }
