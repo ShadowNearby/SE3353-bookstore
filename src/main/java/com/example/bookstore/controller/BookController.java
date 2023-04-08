@@ -2,6 +2,11 @@ package com.example.bookstore.controller;
 
 import com.example.bookstore.entity.Book;
 import com.example.bookstore.service.BookService;
+import com.example.bookstore.util.request.AddBookForm;
+import com.example.bookstore.util.request.BookStatisticsForm;
+import com.example.bookstore.util.request.IdForm;
+import com.example.bookstore.util.request.PutBookForm;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,14 +22,12 @@ public class BookController {
     public BookController(BookService bookService) {
         this.bookService = bookService;
     }
-
 //    @RequestMapping(value = "/api/book", method = RequestMethod.GET, params = {"name"})
 //    public Book getBookByName(@RequestParam("name") String name) {
 //        return bookService.getBookByName(name);
 //    }
 
     @RequestMapping(value = "/api/book/{bookId}", method = RequestMethod.GET)
-    @CrossOrigin(origins = "http://localhost:3000")
     public Book getBookById(@PathVariable("bookId") Long bookId) {
         return bookService.getBookById(bookId);
     }
@@ -41,12 +44,21 @@ public class BookController {
     }
 
     @RequestMapping(value = "/api/book/add", method = RequestMethod.POST)
-    public void addBook(@RequestParam("name") String name, @RequestParam("image") String image,
-                        @RequestParam("desc") String desc, @RequestParam("author") String author,
-                        @RequestParam("isbn") String isbn, @RequestParam("price") Double price,
-                        @RequestParam("inventory") Integer inventory, @RequestParam("tagNames") String tagName
+    public void addBook(@RequestBody @NotNull AddBookForm addBookForm
     ) {
-        bookService.addBook(name, image, desc, author, isbn, price, inventory, tagName);
+        bookService.addBook(addBookForm.getName(), addBookForm.getImage(), addBookForm.getDescription(), addBookForm.getAuthor(), addBookForm.getIsbn(), addBookForm.getPrice(), addBookForm.getInventory(), addBookForm.getTagIds());
+    }
+
+    @RequestMapping(value = "/api/book/put", method = RequestMethod.PUT)
+    public void putBook(@RequestBody @NotNull PutBookForm putBookForm
+    ) {
+        bookService.putBook(putBookForm.getId(), putBookForm.getName(), putBookForm.getImage(), putBookForm.getDescription(), putBookForm.getAuthor(), putBookForm.getIsbn(), putBookForm.getPrice(), putBookForm.getInventory(), putBookForm.getTagIds());
+    }
+
+    @RequestMapping(value = "/api/book/delete", method = RequestMethod.DELETE)
+    public void deleteBook(@RequestBody @NotNull IdForm idForm
+    ) {
+        bookService.deleteBook(idForm.getId());
     }
 
     @RequestMapping(value = "/api/book/addinv", method = RequestMethod.POST)
@@ -59,4 +71,8 @@ public class BookController {
         return bookService.addInventory(name, count);
     }
 
+    @RequestMapping(value = "/api/book/statistics", method = RequestMethod.GET)
+    public List<BookStatisticsForm> bookStatistics() {
+        return bookService.statistics();
+    }
 }

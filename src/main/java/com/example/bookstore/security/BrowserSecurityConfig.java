@@ -1,5 +1,6 @@
 package com.example.bookstore.security;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,8 +18,10 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 public class BrowserSecurityConfig {
+
+
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(@NotNull HttpSecurity http) throws Exception {
         return http.cors().and().csrf().disable()
                 .authorizeHttpRequests()
                 .anyRequest().permitAll()
@@ -31,7 +34,7 @@ public class BrowserSecurityConfig {
                     out.close();
                 }).failureHandler((request, httpServletResponse, exception) -> {
                     httpServletResponse.setContentType("application/json;charset=UTF-8");
-                    httpServletResponse.setStatus(401);
+                    httpServletResponse.setStatus(400);
                     PrintWriter out = httpServletResponse.getWriter();
                     out.write("{\"message\":\"登录失败\"}");
                     out.flush();

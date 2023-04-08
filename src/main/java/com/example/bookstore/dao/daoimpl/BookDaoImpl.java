@@ -6,7 +6,7 @@ import com.example.bookstore.entity.Tag;
 import com.example.bookstore.repository.BookRepository;
 import org.springframework.stereotype.Repository;
 
-
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -40,7 +40,7 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public List<Book> getBooksByTags(List<Tag> tags) {
-        return bookRepository.findAllByTagsIn(tags);
+        return bookRepository.findAllByTagsIn(Collections.singleton(tags));
     }
 
     @Override
@@ -60,6 +60,11 @@ public class BookDaoImpl implements BookDao {
         book.setInventory(inv - count);
         bookRepository.save(book);
         return inv - count;
+    }
+
+    @Override
+    public void deleteBook(Book book) {
+        bookRepository.delete(book);
     }
 
 }

@@ -19,4 +19,6 @@ public interface BookDao {
     Integer addInventory(String name, Integer count);
 
     Integer subInventory(String name, Integer count);
+
+    void deleteBook(Book book);
 }

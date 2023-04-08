@@ -1,6 +1,6 @@
 package com.example.bookstore.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +20,7 @@ public class Tag {
     @Column(name = "content", nullable = false, unique = true)
     private String content;
 
-    @JsonIgnoreProperties(value = {"tags"})
+    @JsonIgnore
     @ManyToMany(mappedBy = "tags", cascade = CascadeType.ALL)
     private List<Book> books;
 

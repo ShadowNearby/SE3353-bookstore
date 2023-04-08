@@ -10,8 +10,10 @@ import com.example.bookstore.entity.Order;
 import com.example.bookstore.entity.User;
 import com.example.bookstore.service.OrderService;
 import com.example.bookstore.util.request.AddOrderForm;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -34,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void addOrder(AddOrderForm addOrderForm) {
+    public void addOrder(@NotNull AddOrderForm addOrderForm) {
         User user = userDao.getUserById(addOrderForm.getUserId());
         Set<Goods> goods = goodsDao.getGoodsByIds(addOrderForm.getGoodsIds());
         Order order = orderDao.addOrder(new Order(user, goods));
@@ -45,5 +47,10 @@ public class OrderServiceImpl implements OrderService {
             bookDao.addBook(book);
             goodsDao.addGoods(good);
         }
+    }
+
+    @Override
+    public List<Order> getAllOrders() {
+        return orderDao.getAllOrders();
     }
 }

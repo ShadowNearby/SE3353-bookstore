@@ -6,6 +6,7 @@ import com.example.bookstore.util.request.AddOrderForm;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -20,6 +21,11 @@ public class OrderController {
     @RequestMapping(value = "/api/order/user/{userId}", method = RequestMethod.GET)
     public Set<Order> getOrderByUserId(@PathVariable Long userId) {
         return orderService.getOrderByUserId(userId);
+    }
+
+    @RequestMapping(value = "/api/orders", method = RequestMethod.GET)
+    public List<Order> getAllOrders() {
+        return orderService.getAllOrders();
     }
 
     @RequestMapping(value = "/api/order/add", method = RequestMethod.POST)

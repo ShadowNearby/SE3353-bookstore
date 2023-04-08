@@ -31,7 +31,6 @@ public class DefaultUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("用户不存在");
         }
         var user = userOptional.get();
-
         return User.builder()
                 .username(username)
                 .password(user.getPassword())

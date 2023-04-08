@@ -3,6 +3,7 @@ package com.example.bookstore.dao;
 import com.example.bookstore.entity.Order;
 import com.example.bookstore.entity.User;
 
+import java.util.List;
 import java.util.Set;
 
 public interface OrderDao {
@@ -11,4 +12,6 @@ public interface OrderDao {
     Set<Order> getOrderByUser(User user);
 
     Order addOrder(Order order);
+
+    List<Order> getAllOrders();
 }

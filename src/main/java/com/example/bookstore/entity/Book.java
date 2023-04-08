@@ -53,6 +53,18 @@ public class Book {
     public Book() {
     }
 
+    public Book(Long id, String name, String image, String description, String author, String ISBN, Double price, Integer inventory, List<Tag> tags) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.description = description;
+        this.author = author;
+        this.ISBN = ISBN;
+        this.price = price;
+        this.inventory = inventory;
+        this.tags = tags;
+    }
+
     void addTags(List<Tag> tags) {
         this.tags.addAll(tags);
     }

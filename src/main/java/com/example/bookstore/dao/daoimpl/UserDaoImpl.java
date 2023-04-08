@@ -40,7 +40,8 @@ public class UserDaoImpl implements UserDao {
     public void addUser(RegisterForm registerForm) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Date data = new Date();
-        User user = new User(registerForm.getUsername(), passwordEncoder.encode(registerForm.getPassword()), registerForm.getEmail(), registerForm.getRole(), data);
+        String avatar = "https://picx.zhimg.com/80/v2-6afa72220d29f045c15217aa6b275808_720w.webp?source=1940ef5c";
+        User user = new User(registerForm.getUsername(), passwordEncoder.encode(registerForm.getPassword()), registerForm.getEmail(), registerForm.getRole(), data, avatar);
         userRepository.save(user);
     }
 

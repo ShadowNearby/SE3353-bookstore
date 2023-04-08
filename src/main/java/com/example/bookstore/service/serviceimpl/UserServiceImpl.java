@@ -68,7 +68,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String handleUserPut(UserPutForm userPutForm) {
-//        userDao.getUserById();
+        User user = userDao.getUserById(userPutForm.getId());
+        if (!Objects.equals(user.getUsername(), userPutForm.getUsername()) && userDao.findUserByUsername(userPutForm.getUsername()).isPresent())
+            return "该账户已存在";
+        if (!Objects.equals(user.getEmail(), userPutForm.getEmail()) && userDao.findUserByEmail(userPutForm.getEmail()).isPresent())
+            return "该邮箱已存在";
+        user.setAvatar(userPutForm.getAvatar());
+        user.setBanned(userPutForm.getBanned());
+        user.setEmail(userPutForm.getEmail());
+        user.setUsername(userPutForm.getUsername());
+        user.setRegisterTime(userPutForm.getRegisterTime());
+        user.setRole(userPutForm.getRole());
+        userDao.updateUser(user);
         return "OK";
     }
 }

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @Transactional
 public class TagController {
@@ -20,6 +22,11 @@ public class TagController {
     @RequestMapping(value = "/api/tag", method = RequestMethod.GET)
     public Tag getTagByContent(@RequestParam("content") String content) {
         return tagService.getTagByContent(content);
+    }
+
+    @RequestMapping(value = "/api/tags", method = RequestMethod.GET)
+    public List<Tag> getAllTags() {
+        return tagService.getAllTags();
     }
 
     @RequestMapping(value = "/api/tag", method = RequestMethod.POST)

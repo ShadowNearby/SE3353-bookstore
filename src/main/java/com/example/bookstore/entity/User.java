@@ -1,7 +1,6 @@
 package com.example.bookstore.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,7 +30,7 @@ public class User {
     private String role;
     @Column(name = "registertime", length = 128, nullable = false)
     private Date registerTime;
-    @JsonIgnoreProperties(value = {"user", "goodsList"})
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Order> orderList;
     @JsonIgnore
@@ -40,12 +39,12 @@ public class User {
     @Column(name = "banned", nullable = false)
     private Boolean banned = false;
 
-    public User(String username, String password, String email, String role, Date registerTime) {
+    public User(String username, String password, String email, String role, Date registerTime, String avatar) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
-        this.avatar = "";
+        this.avatar = avatar;
         this.registerTime = registerTime;
     }
 

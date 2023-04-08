@@ -6,6 +6,7 @@ import com.example.bookstore.entity.User;
 import com.example.bookstore.repository.OrderRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Set;
 
 @Repository
@@ -29,5 +30,10 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public Order addOrder(Order order) {
         return orderRepository.save(order);
+    }
+
+    @Override
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
     }
 }

@@ -7,9 +7,11 @@ import com.example.bookstore.util.request.ForgetForm;
 import com.example.bookstore.util.request.RegisterForm;
 import com.example.bookstore.util.request.UserPutForm;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
 import java.util.Set;
 
 @RestController
@@ -28,18 +30,27 @@ public class UserController {
 
 
     @RequestMapping(value = "/api/user/put", method = RequestMethod.PUT)
-    public Message handleRegister(@RequestBody @NotNull UserPutForm userPutForm) {
-        return new Message(userService.handleUserPut(userPutForm));
+    public ResponseEntity<Message> handleRegister(@RequestBody @NotNull UserPutForm userPutForm) {
+        String body = userService.handleUserPut(userPutForm);
+        if (!Objects.equals(body, "OK"))
+            return ResponseEntity.status(400).body(new Message(body));
+        return ResponseEntity.status(200).body(new Message("修改成功"));
     }
 
     @RequestMapping(value = "/api/user/add", method = RequestMethod.POST)
-    public Message handleRegister(@RequestBody @NotNull RegisterForm registerForm) {
-        return new Message(userService.handleRegister(registerForm));
+    public ResponseEntity<Message> handleRegister(@RequestBody @NotNull RegisterForm registerForm) {
+        String body = userService.handleRegister(registerForm);
+        if (!Objects.equals(body, "OK"))
+            return ResponseEntity.status(400).body(new Message(body));
+        return ResponseEntity.status(200).body(new Message("注册成功"));
     }
 
     @RequestMapping(value = "/api/user/forget", method = RequestMethod.POST)
-    public Message handleForget(@RequestBody @NotNull ForgetForm forgetForm) {
-        return new Message(userService.handleForget(forgetForm));
+    public ResponseEntity<Message> handleForget(@RequestBody @NotNull ForgetForm forgetForm) {
+        String body = userService.handleForget(forgetForm);
+        if (!Objects.equals(body, "OK"))
+            return ResponseEntity.status(400).body(new Message(body));
+        return ResponseEntity.status(200).body(new Message("修改成功"));
     }
 
     @RequestMapping(value = "/api/user/{account}", method = RequestMethod.GET)

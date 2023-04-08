@@ -5,6 +5,8 @@ import com.example.bookstore.entity.Tag;
 import com.example.bookstore.repository.TagRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class TagDaoImpl implements TagDao {
     private final TagRepository tagRepository;
@@ -26,5 +28,15 @@ public class TagDaoImpl implements TagDao {
     @Override
     public Tag getTagByContent(String content) {
         return tagRepository.findByContent(content);
+    }
+
+    @Override
+    public List<Tag> getAllTags() {
+        return tagRepository.findAll();
+    }
+
+    @Override
+    public Tag getTagById(Long tagId) {
+        return tagRepository.findById(tagId).get();
     }
 }

@@ -5,6 +5,8 @@ import com.example.bookstore.entity.Tag;
 import com.example.bookstore.service.TagService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TagServiceImpl implements TagService {
     private final TagDao tagDao;
@@ -26,5 +28,10 @@ public class TagServiceImpl implements TagService {
     @Override
     public Tag getTagByContent(String content) {
         return tagDao.getTagByContent(content);
+    }
+
+    @Override
+    public List<Tag> getAllTags() {
+        return tagDao.getAllTags();
     }
 }
