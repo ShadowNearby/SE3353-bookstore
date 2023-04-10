@@ -1,15 +1,14 @@
 package com.example.bookstore.controller;
 
+import com.example.bookstore.entity.Order;
 import com.example.bookstore.entity.User;
 import com.example.bookstore.service.BookService;
+import com.example.bookstore.service.OrderService;
 import com.example.bookstore.service.UserService;
 import com.example.bookstore.util.request.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
@@ -19,12 +18,18 @@ import java.util.Set;
 public class AdminController {
     private final BookService bookService;
     private final UserService userService;
+    private final OrderService orderService;
 
-    public AdminController(BookService bookService, UserService userService) {
+    public AdminController(BookService bookService, UserService userService, OrderService orderService) {
         this.bookService = bookService;
         this.userService = userService;
+        this.orderService = orderService;
     }
 
+    @RequestMapping(value = "/admin/user/{username}", method = RequestMethod.GET)
+    public User getUserByUsername(@PathVariable("username") String username) {
+        return userService.getUserByUsername(username);
+    }
 
     @RequestMapping(value = "/admin/book/add", method = RequestMethod.POST)
     public void addBook(@RequestBody @NotNull AddBookForm addBookForm
@@ -59,5 +64,13 @@ public class AdminController {
         return userService.getAllUsers();
     }
 
+    @RequestMapping(value = "/admin/order/user/{userId}", method = RequestMethod.GET)
+    public Set<Order> getOrderByUserId(@PathVariable Long userId) {
+        return orderService.getOrderByUserId(userId);
+    }
 
+    @RequestMapping(value = "/admin/orders", method = RequestMethod.GET)
+    public List<Order> getAllOrders() {
+        return orderService.getAllOrders();
+    }
 }

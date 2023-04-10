@@ -9,5 +9,4 @@ import java.util.Set;
 @Setter
 public class AddOrderForm {
     private Set<Long> goodsIds;
-    private Long userId;
 }

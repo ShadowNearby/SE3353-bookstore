@@ -6,6 +6,7 @@ import com.example.bookstore.entity.Goods;
 import com.example.bookstore.entity.Order;
 import com.example.bookstore.entity.User;
 import com.example.bookstore.service.UserService;
+import com.example.bookstore.util.SessionUtil;
 import com.example.bookstore.util.request.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -51,7 +52,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String handleForget(ForgetForm forgetForm) {
-        Optional<User> user = userDao.findUserByUsername(forgetForm.getAccount());
+        Optional<User> user = userDao.findUserByUsername(forgetForm.getUsername());
         if (user.isEmpty())
             return "账户不存在";
         if (!Objects.equals(user.get().getEmail(), forgetForm.getEmail()))
@@ -113,5 +114,11 @@ public class UserServiceImpl implements UserService {
             }
         });
         return userStatisticsForms;
+    }
+
+    @Override
+    public User getUser() {
+        Long userId = SessionUtil.getUserId();
+        return userDao.getUserById(userId);
     }
 }

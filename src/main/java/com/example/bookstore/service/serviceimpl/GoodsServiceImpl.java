@@ -9,6 +9,7 @@ import com.example.bookstore.entity.Goods;
 import com.example.bookstore.entity.Order;
 import com.example.bookstore.entity.User;
 import com.example.bookstore.service.GoodsService;
+import com.example.bookstore.util.SessionUtil;
 import com.example.bookstore.util.request.AddGoodsForm;
 import com.example.bookstore.util.request.IdForm;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,8 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public Set<Goods> getGoodsInCart(Long userId) {
+    public Set<Goods> getGoodsInCart() {
+        Long userId = SessionUtil.getUserId();
         User user = userDao.getUserById(userId);
         Set<Goods> allGoods = goodsDao.getGoodsByUser(user);
         allGoods.removeIf(goods -> goods.getOrder() != null);
@@ -44,15 +46,17 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public Set<Goods> getGoodsInOrder(Long userId) {
+    public Set<Goods> getGoodsInOrder() {
+        Long userId = SessionUtil.getUserId();
         User user = userDao.getUserById(userId);
         Set<Order> orders = orderDao.getOrderByUser(user);
         return goodsDao.getGoodsByOrders(orders);
     }
 
     @Override
-    public Long addGoodsByBookIdUserId(AddGoodsForm addGoodsForm) {
-        User user = userDao.getUserById(addGoodsForm.getUserId());
+    public Long addGoodsByBookId(AddGoodsForm addGoodsForm) {
+        Long userId = SessionUtil.getUserId();
+        User user = userDao.getUserById(userId);
         Book book = bookDao.getBookById(addGoodsForm.getBookId());
         Set<Goods> goods = goodsDao.findGoodsInCart(user, book);
         for (Goods good : goods) {

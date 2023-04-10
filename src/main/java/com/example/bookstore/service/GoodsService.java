@@ -10,11 +10,11 @@ import java.util.Set;
 public interface GoodsService {
     List<Goods> getAllGoods();
 
-    Set<Goods> getGoodsInCart(Long userId);
+    Set<Goods> getGoodsInCart();
 
-    Set<Goods> getGoodsInOrder(Long userId);
+    Set<Goods> getGoodsInOrder();
 
-    Long addGoodsByBookIdUserId(AddGoodsForm addGoodsForm);
+    Long addGoodsByBookId(AddGoodsForm addGoodsForm);
 
     void removeById(IdForm idForm);
 }

@@ -5,9 +5,11 @@ import com.example.bookstore.service.OrderService;
 import com.example.bookstore.util.request.AddOrderForm;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -19,18 +21,14 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @RequestMapping(value = "/api/order/user/{userId}", method = RequestMethod.GET)
-    public Set<Order> getOrderByUserId(@PathVariable Long userId) {
-        return orderService.getOrderByUserId(userId);
-    }
-
-    @RequestMapping(value = "/api/orders", method = RequestMethod.GET)
-    public List<Order> getAllOrders() {
-        return orderService.getAllOrders();
-    }
 
     @RequestMapping(value = "/api/order/add", method = RequestMethod.POST)
-    public void getOrderByUserId(@RequestBody @NotNull AddOrderForm addOrderForm) {
+    public void addOrder(@RequestBody @NotNull AddOrderForm addOrderForm) {
         orderService.addOrder(addOrderForm);
+    }
+
+    @RequestMapping(value = "/api/order", method = RequestMethod.GET)
+    public Set<Order> getOrder() {
+        return orderService.getOrder();
     }
 }

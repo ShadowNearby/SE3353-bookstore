@@ -20,4 +20,6 @@ public interface UserService {
     String handleUserPut(UserPutForm userPutForm);
 
     List<UserStatisticsForm> statistics(StatisticForm statisticForm);
+
+    User getUser();
 }

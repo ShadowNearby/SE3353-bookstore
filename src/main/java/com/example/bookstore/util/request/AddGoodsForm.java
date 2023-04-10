@@ -7,6 +7,5 @@ import lombok.Setter;
 @Setter
 public class AddGoodsForm {
     private Long bookId;
-    private Long userId;
     private Integer count;
 }

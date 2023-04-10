@@ -12,4 +12,6 @@ public interface OrderService {
     void addOrder(AddOrderForm addOrderForm);
 
     List<Order> getAllOrders();
+
+    Set<Order> getOrder();
 }

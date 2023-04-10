@@ -1,12 +1,12 @@
 package com.example.bookstore.util.request;
 
 public class ForgetForm {
-    private String account;
+    private String username;
     private String password;
     private String email;
 
-    public String getAccount() {
-        return account;
+    public String getUsername() {
+        return username;
     }
 
     public String getPassword() {

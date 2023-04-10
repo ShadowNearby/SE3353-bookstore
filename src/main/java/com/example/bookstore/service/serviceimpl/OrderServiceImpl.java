@@ -9,6 +9,7 @@ import com.example.bookstore.entity.Goods;
 import com.example.bookstore.entity.Order;
 import com.example.bookstore.entity.User;
 import com.example.bookstore.service.OrderService;
+import com.example.bookstore.util.SessionUtil;
 import com.example.bookstore.util.request.AddOrderForm;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +38,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void addOrder(AddOrderForm addOrderForm) {
-        User user = userDao.getUserById(addOrderForm.getUserId());
+        Long userId = SessionUtil.getUserId();
+        User user = userDao.getUserById(userId);
         Set<Goods> goodsSet = goodsDao.getGoodsByIds(addOrderForm.getGoodsIds());
         Order order = orderDao.addOrder(new Order(user, goodsSet));
         List<Goods> goodsList = new ArrayList<>(goodsSet);
@@ -53,5 +55,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getAllOrders() {
         return orderDao.getAllOrders();
+    }
+
+    @Override
+    public Set<Order> getOrder() {
+        Long userId = SessionUtil.getUserId();
+        return orderDao.getOrdersByUserId(userId);
     }
 }

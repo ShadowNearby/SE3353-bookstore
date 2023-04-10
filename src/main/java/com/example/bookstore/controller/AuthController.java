@@ -3,22 +3,29 @@ package com.example.bookstore.controller;
 import com.example.bookstore.constant.Constant;
 import com.example.bookstore.entity.User;
 import com.example.bookstore.service.UserService;
+import com.example.bookstore.util.Message;
 import com.example.bookstore.util.SessionUtil;
+import com.example.bookstore.util.request.ForgetForm;
 import com.example.bookstore.util.request.LoginForm;
+import com.example.bookstore.util.request.RegisterForm;
 import jakarta.servlet.http.HttpServletResponse;
 import net.sf.json.JSONObject;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Objects;
+
 @RestController
 @Transactional
-public class LoginController {
+public class AuthController {
     private final UserService userService;
 
-    public LoginController(UserService userService) {
+    public AuthController(UserService userService) {
         this.userService = userService;
     }
 
@@ -37,5 +44,26 @@ public class LoginController {
         SessionUtil.setSession(message);
         message.put(Constant.USER_AVATAR, auth.getAvatar());
         return message;
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public ResponseEntity<Message> handleRegister(@RequestBody @NotNull RegisterForm registerForm) {
+        String body = userService.handleRegister(registerForm);
+        if (!Objects.equals(body, "OK"))
+            return ResponseEntity.status(400).body(new Message(body));
+        return ResponseEntity.status(200).body(new Message("注册成功"));
+    }
+
+    @RequestMapping(value = "/forget", method = RequestMethod.POST)
+    public ResponseEntity<Message> handleForget(@RequestBody @NotNull ForgetForm forgetForm) {
+        String body = userService.handleForget(forgetForm);
+        if (!Objects.equals(body, "OK"))
+            return ResponseEntity.status(400).body(new Message(body));
+        return ResponseEntity.status(200).body(new Message("修改成功"));
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public void handleLogout() {
+        SessionUtil.removeSession();
     }
 }

@@ -68,4 +68,13 @@ public class SessionUtil {
         }
         return true;
     }
+
+    public static Long getUserId() {
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        assert requestAttributes != null;
+        HttpServletRequest request = requestAttributes.getRequest();
+        HttpSession session = request.getSession(false);
+        Integer userId = (Integer) session.getAttribute("userId");
+        return userId.longValue();
+    }
 }
