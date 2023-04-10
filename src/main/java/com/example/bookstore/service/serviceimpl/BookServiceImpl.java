@@ -5,9 +5,11 @@ import com.example.bookstore.dao.GoodsDao;
 import com.example.bookstore.dao.TagDao;
 import com.example.bookstore.entity.Book;
 import com.example.bookstore.entity.Goods;
+import com.example.bookstore.entity.Order;
 import com.example.bookstore.entity.Tag;
 import com.example.bookstore.service.BookService;
 import com.example.bookstore.util.request.BookStatisticsForm;
+import com.example.bookstore.util.request.StatisticForm;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -90,20 +92,21 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookStatisticsForm> statistics() {
+    public List<BookStatisticsForm> statistics(StatisticForm statisticForm) {
         List<Goods> goodsList = goodsDao.getAllGoods();
-        HashMap<String, Integer> nameCountMap = new HashMap<String, Integer>();
+        HashMap<String, Integer> nameCountMap = new HashMap<>();
         for (Goods goods : goodsList) {
-            if (goods.getOrder() != null) {
-                String key = goods.getBook().getName();
-                boolean exist = nameCountMap.containsKey(key);
-                if (exist) {
-                    Integer value = nameCountMap.get(key);
-                    value += goods.getCount();
-                    nameCountMap.put(key, value);
-                } else {
-                    nameCountMap.put(key, goods.getCount());
-                }
+            Order order = goods.getOrder();
+            if (order == null || order.getOrderTime().getTime() < statisticForm.getBeginDate().getTime() || order.getOrderTime().getTime() > statisticForm.getEndDate().getTime())
+                continue;
+            String key = goods.getBook().getName();
+            boolean exist = nameCountMap.containsKey(key);
+            if (exist) {
+                Integer value = nameCountMap.get(key);
+                value += goods.getCount();
+                nameCountMap.put(key, value);
+            } else {
+                nameCountMap.put(key, goods.getCount());
             }
         }
         List<BookStatisticsForm> bookStatisticsForms = new ArrayList<>();

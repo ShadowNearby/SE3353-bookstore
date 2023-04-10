@@ -2,6 +2,7 @@ package com.example.bookstore.service;
 
 import com.example.bookstore.entity.Book;
 import com.example.bookstore.util.request.BookStatisticsForm;
+import com.example.bookstore.util.request.StatisticForm;
 
 import java.util.List;
 
@@ -25,5 +26,5 @@ public interface BookService {
 
     Integer subInventory(String name, Integer count);
 
-    List<BookStatisticsForm> statistics();
+    List<BookStatisticsForm> statistics(StatisticForm statisticForm);
 }

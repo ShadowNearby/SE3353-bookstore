@@ -1,12 +1,12 @@
 package com.example.bookstore.dao.daoimpl;
 
+import com.example.bookstore.constant.Constant;
 import com.example.bookstore.dao.UserDao;
 import com.example.bookstore.entity.User;
 import com.example.bookstore.repository.UserRepository;
 import com.example.bookstore.util.request.RegisterForm;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.DigestUtils;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -22,8 +22,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findUserByUsername(String account) {
-        return userRepository.findUserByUsername(account);
+    public Optional<User> findUserByUsername(String username) {
+        return userRepository.findUserByUsername(username);
     }
 
     @Override
@@ -38,10 +38,11 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void addUser(RegisterForm registerForm) {
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Date data = new Date();
-        String avatar = "https://picx.zhimg.com/80/v2-6afa72220d29f045c15217aa6b275808_720w.webp?source=1940ef5c";
-        User user = new User(registerForm.getUsername(), passwordEncoder.encode(registerForm.getPassword()), registerForm.getEmail(), registerForm.getRole(), data, avatar);
+        String avatar = Constant.DEFAULT_AVATAR;
+        String password = DigestUtils.md5DigestAsHex(registerForm.getPassword().getBytes());
+        String userRole = Constant.USER;
+        User user = new User(registerForm.getUsername(), password, registerForm.getEmail(), userRole, data, avatar);
         userRepository.save(user);
     }
 

@@ -1,42 +1,42 @@
 package com.example.bookstore.service.serviceimpl;
 
+import com.example.bookstore.dao.OrderDao;
 import com.example.bookstore.dao.UserDao;
+import com.example.bookstore.entity.Goods;
+import com.example.bookstore.entity.Order;
 import com.example.bookstore.entity.User;
 import com.example.bookstore.service.UserService;
-import com.example.bookstore.util.request.ForgetForm;
-import com.example.bookstore.util.request.RegisterForm;
-import com.example.bookstore.util.request.UserPutForm;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import com.example.bookstore.util.request.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
     private final UserDao userDao;
-    private final PasswordEncoder passwordEncoder;
+    private final OrderDao orderDao;
 
 
-    public UserServiceImpl(UserDao userDao, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserDao userDao, OrderDao orderDao) {
         this.userDao = userDao;
-        this.passwordEncoder = new BCryptPasswordEncoder();
+        this.orderDao = orderDao;
     }
 
     @Override
-    public Boolean LoginCheck(String account, String password) {
-        Optional<User> user = userDao.findUserByUsername(account);
+    public User handleLogin(String username, String password) {
+        Optional<User> user = userDao.findUserByUsername(username);
         if (user.isEmpty())
-            return false;
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        return passwordEncoder.matches(password, user.get().getPassword());
+            return null;
+        String md5Password = DigestUtils.md5DigestAsHex(password.getBytes());
+        if (!Objects.equals(user.get().getPassword(), md5Password))
+            return null;
+        return user.get();
     }
 
     @Override
-    public User getUserByAccount(String account) {
-        return userDao.getUserByUsername(account);
+    public User getUserByUsername(String username) {
+        return userDao.getUserByUsername(username);
     }
 
     @Override
@@ -56,7 +56,8 @@ public class UserServiceImpl implements UserService {
             return "账户不存在";
         if (!Objects.equals(user.get().getEmail(), forgetForm.getEmail()))
             return "账户对应邮箱不正确";
-        user.get().setPassword(passwordEncoder.encode(forgetForm.getPassword()));
+        String password = DigestUtils.md5DigestAsHex(forgetForm.getPassword().getBytes());
+        user.get().setPassword(password);
         userDao.updateUser(user.get());
         return "OK";
     }
@@ -81,5 +82,36 @@ public class UserServiceImpl implements UserService {
         user.setRole(userPutForm.getRole());
         userDao.updateUser(user);
         return "OK";
+    }
+
+    @Override
+    public List<UserStatisticsForm> statistics(StatisticForm statisticForm) {
+        HashMap<String, Double> spendMap = new HashMap<>();
+        List<Order> orderList = orderDao.getAllOrders();
+        for (Order order : orderList) {
+            Date orderTime = order.getOrderTime();
+            if (orderTime.getTime() < statisticForm.getBeginDate().getTime() || orderTime.getTime() > statisticForm.getEndDate().getTime())
+                continue;
+            String username = order.getUser().getUsername();
+            Set<Goods> goodsList = order.getGoodsList();
+            double spend = 0.0;
+            if (spendMap.containsKey(username))
+                spend = spendMap.get(username);
+            for (Goods goods : goodsList) {
+                spend += goods.getBook().getPrice() * goods.getCount();
+            }
+            spendMap.put(username, spend);
+        }
+        List<UserStatisticsForm> userStatisticsForms = new ArrayList<>();
+        for (String key : spendMap.keySet()) {
+            userStatisticsForms.add(new UserStatisticsForm(key, spendMap.get(key)));
+        }
+        userStatisticsForms.sort(new Comparator<UserStatisticsForm>() {
+            @Override
+            public int compare(UserStatisticsForm o1, UserStatisticsForm o2) {
+                return o2.getSpend().compareTo(o1.getSpend());
+            }
+        });
+        return userStatisticsForms;
     }
 }

@@ -6,11 +6,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BookStatisticsForm {
-    private String BookName;
-    private Integer Count;
+    private String bookName;
+    private Integer count;
 
     public BookStatisticsForm(String bookName, Integer count) {
-        BookName = bookName;
-        Count = count;
+        this.bookName = bookName;
+        this.count = count;
     }
 }

@@ -3,16 +3,14 @@ package com.example.bookstore.controller;
 import com.example.bookstore.entity.User;
 import com.example.bookstore.service.UserService;
 import com.example.bookstore.util.Message;
-import com.example.bookstore.util.request.ForgetForm;
-import com.example.bookstore.util.request.RegisterForm;
-import com.example.bookstore.util.request.UserPutForm;
+import com.example.bookstore.util.request.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @RestController
 @Transactional
@@ -21,11 +19,6 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
-    }
-
-    @RequestMapping(value = "/api/users", method = RequestMethod.GET)
-    public Set<User> getAllUsers() {
-        return userService.getAllUsers();
     }
 
 
@@ -53,8 +46,14 @@ public class UserController {
         return ResponseEntity.status(200).body(new Message("修改成功"));
     }
 
-    @RequestMapping(value = "/api/user/{account}", method = RequestMethod.GET)
-    public User getUserByAccount(@PathVariable("account") String account) {
-        return userService.getUserByAccount(account);
+    @RequestMapping(value = "/api/user/{username}", method = RequestMethod.GET)
+    public User getUserByAccount(@PathVariable("username") String username) {
+        return userService.getUserByUsername(username);
+    }
+
+
+    @RequestMapping(value = "/api/user/statistics", method = RequestMethod.POST)
+    public List<UserStatisticsForm> userCostStatistics(@RequestBody @NotNull StatisticForm statisticForm) {
+        return userService.statistics(statisticForm);
     }
 }

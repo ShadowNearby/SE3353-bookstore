@@ -4,7 +4,6 @@ import com.example.bookstore.entity.Book;
 import com.example.bookstore.entity.Goods;
 import com.example.bookstore.entity.Order;
 import com.example.bookstore.entity.User;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Set;
@@ -23,6 +22,4 @@ public interface GoodsRepository extends JpaRepository<Goods, Long> {
     Set<Goods> findAllByUserAndBook(User user, Book book);
 
     void deleteGoodsById(Long id);
-
-    void deleteById(@NotNull Long id);
 }

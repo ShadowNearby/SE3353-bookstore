@@ -10,9 +10,9 @@ import com.example.bookstore.entity.Order;
 import com.example.bookstore.entity.User;
 import com.example.bookstore.service.OrderService;
 import com.example.bookstore.util.request.AddOrderForm;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -36,16 +36,17 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void addOrder(@NotNull AddOrderForm addOrderForm) {
+    public void addOrder(AddOrderForm addOrderForm) {
         User user = userDao.getUserById(addOrderForm.getUserId());
-        Set<Goods> goods = goodsDao.getGoodsByIds(addOrderForm.getGoodsIds());
-        Order order = orderDao.addOrder(new Order(user, goods));
-        for (Goods good : goods) {
-            good.setOrder(order);
-            Book book = good.getBook();
-            book.setInventory(book.getInventory() - good.getCount());
+        Set<Goods> goodsSet = goodsDao.getGoodsByIds(addOrderForm.getGoodsIds());
+        Order order = orderDao.addOrder(new Order(user, goodsSet));
+        List<Goods> goodsList = new ArrayList<>(goodsSet);
+        for (Goods goods : goodsList) {
+            goods.setOrder(order);
+            Book book = goods.getBook();
+            book.setInventory(book.getInventory() - goods.getCount());
             bookDao.addBook(book);
-            goodsDao.addGoods(good);
+            goodsDao.addGoods(goods);
         }
     }
 

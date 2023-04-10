@@ -3,6 +3,7 @@ package com.example.bookstore.controller;
 import com.example.bookstore.entity.Order;
 import com.example.bookstore.service.OrderService;
 import com.example.bookstore.util.request.AddOrderForm;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,7 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/api/order/add", method = RequestMethod.POST)
-    public void getOrderByUserId(@RequestBody AddOrderForm addOrderForm) {
+    public void getOrderByUserId(@RequestBody @NotNull AddOrderForm addOrderForm) {
         orderService.addOrder(addOrderForm);
     }
 }

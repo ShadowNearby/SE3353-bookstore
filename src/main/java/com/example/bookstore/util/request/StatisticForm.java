@@ -3,11 +3,11 @@ package com.example.bookstore.util.request;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Set;
+import java.util.Date;
 
 @Getter
 @Setter
-public class AddOrderForm {
-    private Set<Long> goodsIds;
-    private Long userId;
+public class StatisticForm {
+    private Date beginDate;
+    private Date endDate;
 }

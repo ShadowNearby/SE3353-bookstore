@@ -1,16 +1,15 @@
 package com.example.bookstore.service;
 
 import com.example.bookstore.entity.User;
-import com.example.bookstore.util.request.ForgetForm;
-import com.example.bookstore.util.request.RegisterForm;
-import com.example.bookstore.util.request.UserPutForm;
+import com.example.bookstore.util.request.*;
 
+import java.util.List;
 import java.util.Set;
 
 public interface UserService {
-    Boolean LoginCheck(String account, String password);
+    User handleLogin(String username, String password);
 
-    User getUserByAccount(String account);
+    User getUserByUsername(String account);
 
     String handleRegister(RegisterForm registerForm);
 
@@ -19,4 +18,6 @@ public interface UserService {
     Set<User> getAllUsers();
 
     String handleUserPut(UserPutForm userPutForm);
+
+    List<UserStatisticsForm> statistics(StatisticForm statisticForm);
 }
