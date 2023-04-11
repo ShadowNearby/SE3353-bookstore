@@ -20,8 +20,6 @@ public class User {
     private Long id;
     @Column(name = "username", length = 128, nullable = false, unique = true)
     private String username;
-    @Column(name = "password", length = 128, nullable = false)
-    private String password;
     @Column(name = "email", length = 128, nullable = false, unique = true)
     private String email;
     @Column(name = "avatar", length = 10240)
@@ -36,12 +34,14 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Goods> goodsList;
+    @JsonIgnore
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private UserAuth userAuth;
     @Column(name = "banned", nullable = false)
     private Boolean banned = false;
 
-    public User(String username, String password, String email, String role, Date registerTime, String avatar) {
+    public User(String username, String email, String role, Date registerTime, String avatar) {
         this.username = username;
-        this.password = password;
         this.email = email;
         this.role = role;
         this.avatar = avatar;

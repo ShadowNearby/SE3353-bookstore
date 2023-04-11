@@ -10,6 +10,7 @@ public class Constant {
     public static final String REMEMBER_ME = "remember";
     public static final String JSESSIONID = "JSESSIONID";
     public static final String LOGIN_ERROR = "账户名或密码错误";
+    public static final Object USER_LOGIN_BANNED = "您的账号已经被禁用";
 
     public static final String MESSAGE = "message";
 

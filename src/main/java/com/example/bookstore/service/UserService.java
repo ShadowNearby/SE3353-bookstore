@@ -2,6 +2,7 @@ package com.example.bookstore.service;
 
 import com.example.bookstore.entity.User;
 import com.example.bookstore.util.request.*;
+import net.sf.json.JSONObject;
 
 import java.util.List;
 import java.util.Set;
@@ -19,7 +20,9 @@ public interface UserService {
 
     String handleUserPut(UserPutForm userPutForm);
 
-    List<UserStatisticsForm> statistics(StatisticForm statisticForm);
+    List<UserStatisticsForm> statisticsAll(StatisticForm statisticForm);
 
     User getUser();
+
+    JSONObject statisticsPersonal(StatisticForm statisticForm);
 }

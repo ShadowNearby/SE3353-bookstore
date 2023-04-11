@@ -5,7 +5,7 @@ import com.example.bookstore.service.UserService;
 import com.example.bookstore.util.Message;
 import com.example.bookstore.util.request.StatisticForm;
 import com.example.bookstore.util.request.UserPutForm;
-import com.example.bookstore.util.request.UserStatisticsForm;
+import net.sf.json.JSONObject;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -40,9 +39,9 @@ public class UserController {
         return userService.getUser();
     }
 
-
     @RequestMapping(value = "/api/user/statistics", method = RequestMethod.POST)
-    public List<UserStatisticsForm> userCostStatistics(@RequestBody @NotNull StatisticForm statisticForm) {
-        return userService.statistics(statisticForm);
+    public JSONObject userPersonalStatistics(@RequestBody @NotNull StatisticForm statisticForm) {
+        return userService.statisticsPersonal(statisticForm);
     }
+
 }

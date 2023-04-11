@@ -3,6 +3,8 @@ package com.example.bookstore.dao.daoimpl;
 import com.example.bookstore.constant.Constant;
 import com.example.bookstore.dao.UserDao;
 import com.example.bookstore.entity.User;
+import com.example.bookstore.entity.UserAuth;
+import com.example.bookstore.repository.UserAuthRepository;
 import com.example.bookstore.repository.UserRepository;
 import com.example.bookstore.util.request.RegisterForm;
 import org.springframework.stereotype.Repository;
@@ -16,9 +18,11 @@ import java.util.Set;
 @Repository
 public class UserDaoImpl implements UserDao {
     private final UserRepository userRepository;
+    private final UserAuthRepository userAuthRepository;
 
-    public UserDaoImpl(UserRepository userRepository) {
+    public UserDaoImpl(UserRepository userRepository, UserAuthRepository userAuthRepository) {
         this.userRepository = userRepository;
+        this.userAuthRepository = userAuthRepository;
     }
 
     @Override
@@ -42,8 +46,10 @@ public class UserDaoImpl implements UserDao {
         String avatar = Constant.DEFAULT_AVATAR;
         String password = DigestUtils.md5DigestAsHex(registerForm.getPassword().getBytes());
         String userRole = Constant.USER;
-        User user = new User(registerForm.getUsername(), password, registerForm.getEmail(), userRole, data, avatar);
+        User user = new User(registerForm.getUsername(), registerForm.getEmail(), userRole, data, avatar);
+        UserAuth userAuth = new UserAuth(password, user);
         userRepository.save(user);
+        userAuthRepository.save(userAuth);
     }
 
     @Override

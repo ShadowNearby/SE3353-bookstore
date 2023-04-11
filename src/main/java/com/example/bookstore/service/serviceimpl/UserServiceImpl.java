@@ -8,6 +8,7 @@ import com.example.bookstore.entity.User;
 import com.example.bookstore.service.UserService;
 import com.example.bookstore.util.SessionUtil;
 import com.example.bookstore.util.request.*;
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
@@ -30,7 +31,7 @@ public class UserServiceImpl implements UserService {
         if (user.isEmpty())
             return null;
         String md5Password = DigestUtils.md5DigestAsHex(password.getBytes());
-        if (!Objects.equals(user.get().getPassword(), md5Password))
+        if (!Objects.equals(user.get().getUserAuth().getPassword(), md5Password))
             return null;
         return user.get();
     }
@@ -58,7 +59,7 @@ public class UserServiceImpl implements UserService {
         if (!Objects.equals(user.get().getEmail(), forgetForm.getEmail()))
             return "账户对应邮箱不正确";
         String password = DigestUtils.md5DigestAsHex(forgetForm.getPassword().getBytes());
-        user.get().setPassword(password);
+        user.get().getUserAuth().setPassword(password);
         userDao.updateUser(user.get());
         return "OK";
     }
@@ -86,7 +87,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserStatisticsForm> statistics(StatisticForm statisticForm) {
+    public List<UserStatisticsForm> statisticsAll(StatisticForm statisticForm) {
         HashMap<String, Double> spendMap = new HashMap<>();
         List<Order> orderList = orderDao.getAllOrders();
         for (Order order : orderList) {
@@ -107,12 +108,7 @@ public class UserServiceImpl implements UserService {
         for (String key : spendMap.keySet()) {
             userStatisticsForms.add(new UserStatisticsForm(key, spendMap.get(key)));
         }
-        userStatisticsForms.sort(new Comparator<UserStatisticsForm>() {
-            @Override
-            public int compare(UserStatisticsForm o1, UserStatisticsForm o2) {
-                return o2.getSpend().compareTo(o1.getSpend());
-            }
-        });
+        userStatisticsForms.sort((o1, o2) -> o2.getSpend().compareTo(o1.getSpend()));
         return userStatisticsForms;
     }
 
@@ -120,5 +116,40 @@ public class UserServiceImpl implements UserService {
     public User getUser() {
         Long userId = SessionUtil.getUserId();
         return userDao.getUserById(userId);
+    }
+
+    @Override
+    public JSONObject statisticsPersonal(StatisticForm statisticForm) {
+        Long userId = SessionUtil.getUserId();
+        Set<Order> orderSet = orderDao.getOrdersByUserId(userId);
+        List<Order> orderList = new ArrayList<>(orderSet);
+        HashMap<String, Integer> nameCountMap = new HashMap<>();
+        double spend = 0.0;
+        for (Order order : orderList) {
+            if (order == null || order.getOrderTime().getTime() < statisticForm.getBeginDate().getTime() || order.getOrderTime().getTime() > statisticForm.getEndDate().getTime())
+                continue;
+            List<Goods> goodsList = new ArrayList<>(order.getGoodsList());
+            for (Goods goods : goodsList) {
+                String key = goods.getBook().getName();
+                spend += goods.getBook().getPrice() * goods.getCount();
+                boolean exist = nameCountMap.containsKey(key);
+                if (exist) {
+                    Integer value = nameCountMap.get(key);
+                    value += goods.getCount();
+                    nameCountMap.put(key, value);
+                } else {
+                    nameCountMap.put(key, goods.getCount());
+                }
+            }
+        }
+        List<BookStatisticsForm> bookStatisticsForms = new ArrayList<>();
+        for (String key : nameCountMap.keySet()) {
+            bookStatisticsForms.add(new BookStatisticsForm(key, nameCountMap.get(key)));
+        }
+        bookStatisticsForms.sort((o1, o2) -> o2.getCount() - o1.getCount());
+        JSONObject responseObject = new JSONObject();
+        responseObject.put("books", bookStatisticsForms);
+        responseObject.put("spend", spend);
+        return responseObject;
     }
 }

@@ -35,7 +35,12 @@ public class AuthController {
         JSONObject message = new JSONObject();
         if (auth == null) {
             message.put(Constant.MESSAGE, Constant.LOGIN_ERROR);
-            response.setStatus(401);
+            response.setStatus(400);
+            return message;
+        }
+        if (auth.getBanned()) {
+            message.put(Constant.MESSAGE, Constant.USER_LOGIN_BANNED);
+            response.setStatus(400);
             return message;
         }
         message.put(Constant.USER_ID, auth.getId());
@@ -65,5 +70,17 @@ public class AuthController {
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public void handleLogout() {
         SessionUtil.removeSession();
+    }
+
+    @RequestMapping(value = "/check", method = RequestMethod.POST)
+    public JSONObject handleCheck() {
+        String auth = SessionUtil.checkAuth();
+        JSONObject object = new JSONObject();
+        if (Objects.equals(auth, Constant.NO_USER)) {
+            object.put("auth", false);
+            return object;
+        }
+        object.put("auth", true);
+        return object;
     }
 }

@@ -1,16 +1,20 @@
 package com.example.bookstore.controller;
 
+import com.example.bookstore.constant.Constant;
 import com.example.bookstore.entity.Order;
 import com.example.bookstore.entity.User;
 import com.example.bookstore.service.BookService;
 import com.example.bookstore.service.OrderService;
 import com.example.bookstore.service.UserService;
+import com.example.bookstore.util.SessionUtil;
 import com.example.bookstore.util.request.*;
+import net.sf.json.JSONObject;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @RestController
@@ -56,7 +60,7 @@ public class AdminController {
 
     @RequestMapping(value = "/admin/user/statistics", method = RequestMethod.POST)
     public List<UserStatisticsForm> userStatistics(@RequestBody @NotNull StatisticForm statisticForm) {
-        return userService.statistics(statisticForm);
+        return userService.statisticsAll(statisticForm);
     }
 
     @RequestMapping(value = "/admin/users", method = RequestMethod.GET)
@@ -72,5 +76,17 @@ public class AdminController {
     @RequestMapping(value = "/admin/orders", method = RequestMethod.GET)
     public List<Order> getAllOrders() {
         return orderService.getAllOrders();
+    }
+
+    @RequestMapping(value = "/admin/check", method = RequestMethod.POST)
+    public JSONObject check() {
+        String auth = SessionUtil.checkAuth();
+        JSONObject object = new JSONObject();
+        if (!Objects.equals(auth, Constant.ADMIN)) {
+            object.put("auth", false);
+            return object;
+        }
+        object.put("auth", true);
+        return object;
     }
 }
