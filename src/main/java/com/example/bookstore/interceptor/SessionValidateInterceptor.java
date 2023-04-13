@@ -21,6 +21,9 @@ public class SessionValidateInterceptor implements HandlerInterceptor {
         String status = SessionUtil.checkAuth();
 //        boolean api = request.getRequestURI().matches("/api/*");
         boolean admin = request.getRequestURI().matches("/admin/*");
+        boolean assets = request.getRequestURI().matches("/assets/*");
+        if (assets)
+            return true;
         if (Objects.equals(status, Constant.NO_USER) || admin && Objects.equals(status, Constant.USER)) {
 //            JSONObject object = new JSONObject();
             response.setStatus(401);

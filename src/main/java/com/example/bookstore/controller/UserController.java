@@ -43,5 +43,4 @@ public class UserController {
     public JSONObject userPersonalStatistics(@RequestBody @NotNull StatisticForm statisticForm) {
         return userService.statisticsPersonal(statisticForm);
     }
-
 }

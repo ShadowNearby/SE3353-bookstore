@@ -35,6 +35,7 @@ public class AuthController {
         JSONObject message = new JSONObject();
         if (auth == null) {
             message.put(Constant.MESSAGE, Constant.LOGIN_ERROR);
+            message.put(Constant.STATE, 400);
             response.setStatus(400);
             return message;
         }
@@ -48,6 +49,8 @@ public class AuthController {
         message.put(Constant.USER_TYPE, auth.getRole());
         SessionUtil.setSession(message);
         message.put(Constant.USER_AVATAR, auth.getAvatar());
+        message.put(Constant.MESSAGE, Constant.LOGIN_SUCCESS);
+        message.put(Constant.STATE, 200);
         return message;
     }
 
