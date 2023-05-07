@@ -65,10 +65,6 @@ public class Book {
         this.tags = tags;
     }
 
-    void addTags(List<Tag> tags) {
-        this.tags.addAll(tags);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

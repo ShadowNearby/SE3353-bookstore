@@ -13,7 +13,6 @@ import com.example.bookstore.util.request.StatisticForm;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -46,7 +45,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> getBooksByTagNames(List<String> tagNames) {
-        List<Tag> tags = new ArrayList<Tag>();
+        List<Tag> tags = new ArrayList<>();
         if (!tagNames.isEmpty())
             for (String tagName : tagNames) {
                 tags.add(tagDao.getTagByContent(tagName));
@@ -113,12 +112,7 @@ public class BookServiceImpl implements BookService {
         for (String key : nameCountMap.keySet()) {
             bookStatisticsForms.add(new BookStatisticsForm(key, nameCountMap.get(key)));
         }
-        bookStatisticsForms.sort(new Comparator<BookStatisticsForm>() {
-            @Override
-            public int compare(BookStatisticsForm o1, BookStatisticsForm o2) {
-                return o2.getCount() - o1.getCount();
-            }
-        });
+        bookStatisticsForms.sort((o1, o2) -> o2.getCount() - o1.getCount());
         return bookStatisticsForms;
     }
 }

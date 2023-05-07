@@ -16,7 +16,7 @@ import java.util.Objects;
 public class SessionValidateInterceptor implements HandlerInterceptor {
 
     @Override
-    public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object obj) throws Exception {
+    public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object obj) {
 
         String status = SessionUtil.checkAuth();
 //        boolean api = request.getRequestURI().matches("/api/*");

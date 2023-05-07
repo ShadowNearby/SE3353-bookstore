@@ -29,7 +29,7 @@ public class AssetsController {
             originalFilename = "default.png";
         String fileSuffix = originalFilename.substring(originalFilename.lastIndexOf("."));
         String uuid = UUID.randomUUID().toString();
-        String basePath = ResourceUtils.getURL("classpath:/static/").getPath() + "assets/image/";
+        String basePath = ResourceUtils.getURL("classpath:").getPath() + "static/assets/image/";
         String fileName = uuid + fileSuffix;
         File dest = new File(basePath, fileName);
         if (!dest.getParentFile().exists()) {
@@ -44,7 +44,7 @@ public class AssetsController {
     @RequestMapping(value = "/assets/image/{fileName}", method = RequestMethod.GET)
     public void imageGetTest(@PathVariable("fileName") String fileName, HttpServletResponse response) throws IOException {
 //        MultipartFile file = fileForm.getFile();
-        String baseUrl = ResourceUtils.getURL("classpath:/static/").getPath() + "assets/image/";
+        String baseUrl = ResourceUtils.getURL("classpath:").getPath() + "static/assets/image/";
         String path = baseUrl + fileName;
         File file = new File(path);
         BufferedImage image = ImageIO.read(new FileInputStream(file));

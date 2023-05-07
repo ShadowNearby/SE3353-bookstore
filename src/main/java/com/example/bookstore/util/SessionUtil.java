@@ -21,24 +21,6 @@ public class SessionUtil {
         return Constant.NO_USER;
     }
 
-    public static JSONObject getAuth() {
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        // Session
-        if (requestAttributes != null) {
-            HttpServletRequest request = requestAttributes.getRequest();
-            HttpSession session = request.getSession(false);
-
-            if (session != null) {
-                JSONObject ret = new JSONObject();
-                ret.put(Constant.USER_ID, session.getAttribute(Constant.USER_ID));
-                ret.put(Constant.USERNAME, session.getAttribute(Constant.USERNAME));
-                ret.put(Constant.USER_TYPE, session.getAttribute(Constant.USER_TYPE));
-                return ret;
-            }
-        }
-        return null;
-    }
-
     public static void setSession(JSONObject data) {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         // Session
@@ -54,7 +36,7 @@ public class SessionUtil {
         }
     }
 
-    public static Boolean removeSession() {
+    public static void removeSession() {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 
         // Session
@@ -66,7 +48,6 @@ public class SessionUtil {
                 session.invalidate();
             }
         }
-        return true;
     }
 
     public static Long getUserId() {

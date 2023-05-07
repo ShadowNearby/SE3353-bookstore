@@ -17,10 +17,6 @@ public class BookController {
     public BookController(BookService bookService) {
         this.bookService = bookService;
     }
-//    @RequestMapping(value = "/api/book", method = RequestMethod.GET, params = {"name"})
-//    public Book getBookByName(@RequestParam("name") String name) {
-//        return bookService.getBookByName(name);
-//    }
 
     @RequestMapping(value = "/api/book/{bookId}", method = RequestMethod.GET)
     public Book getBookById(@PathVariable("bookId") Long bookId) {
