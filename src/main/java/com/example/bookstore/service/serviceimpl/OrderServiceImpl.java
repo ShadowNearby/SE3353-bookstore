@@ -11,6 +11,7 @@ import com.example.bookstore.entity.User;
 import com.example.bookstore.service.OrderService;
 import com.example.bookstore.util.SessionUtil;
 import com.example.bookstore.util.request.AddOrderForm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,17 +20,21 @@ import java.util.Set;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-    private final OrderDao orderDao;
-    private final UserDao userDao;
-    private final GoodsDao goodsDao;
-    private final BookDao bookDao;
+    @Autowired
+    private OrderDao orderDao;
+    @Autowired
+    private UserDao userDao;
+    @Autowired
+    private GoodsDao goodsDao;
+    @Autowired
+    private BookDao bookDao;
 
-    public OrderServiceImpl(OrderDao orderDao, UserDao userDao, GoodsDao goodsDao, BookDao bookDao) {
-        this.orderDao = orderDao;
-        this.userDao = userDao;
-        this.goodsDao = goodsDao;
-        this.bookDao = bookDao;
-    }
+//    public OrderServiceImpl(OrderDao orderDao, UserDao userDao, GoodsDao goodsDao, BookDao bookDao) {
+//        this.orderDao = orderDao;
+//        this.userDao = userDao;
+//        this.goodsDao = goodsDao;
+//        this.bookDao = bookDao;
+//    }
 
     @Override
     public Set<Order> getOrderByUserId(Long userId) {

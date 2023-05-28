@@ -3,17 +3,19 @@ package com.example.bookstore.dao.daoimpl;
 import com.example.bookstore.dao.TagDao;
 import com.example.bookstore.entity.Tag;
 import com.example.bookstore.repository.TagRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
 public class TagDaoImpl implements TagDao {
-    private final TagRepository tagRepository;
+    @Autowired
+    private TagRepository tagRepository;
 
-    public TagDaoImpl(TagRepository tagRepository) {
-        this.tagRepository = tagRepository;
-    }
+//    public TagDaoImpl(TagRepository tagRepository) {
+//        this.tagRepository = tagRepository;
+//    }
 
     @Override
     public void addTag(Tag tag) {

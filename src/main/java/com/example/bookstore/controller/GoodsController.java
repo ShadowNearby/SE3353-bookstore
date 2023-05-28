@@ -5,6 +5,7 @@ import com.example.bookstore.service.GoodsService;
 import com.example.bookstore.util.request.AddGoodsForm;
 import com.example.bookstore.util.request.IdForm;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,11 +17,12 @@ import java.util.Set;
 @RestController
 @Transactional
 public class GoodsController {
-    private final GoodsService goodsService;
+    @Autowired
+    private GoodsService goodsService;
 
-    public GoodsController(GoodsService goodsService) {
-        this.goodsService = goodsService;
-    }
+//    public GoodsController(GoodsService goodsService) {
+//        this.goodsService = goodsService;
+//    }
 
     @RequestMapping(value = "/api/goods/cart", method = RequestMethod.GET)
     public Set<Goods> getGoodsInCart() {

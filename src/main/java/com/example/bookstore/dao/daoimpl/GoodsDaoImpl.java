@@ -6,6 +6,7 @@ import com.example.bookstore.entity.Goods;
 import com.example.bookstore.entity.Order;
 import com.example.bookstore.entity.User;
 import com.example.bookstore.repository.GoodsRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,11 +14,12 @@ import java.util.Set;
 
 @Repository
 public class GoodsDaoImpl implements GoodsDao {
-    private final GoodsRepository goodsRepository;
+    @Autowired
+    private GoodsRepository goodsRepository;
 
-    public GoodsDaoImpl(GoodsRepository goodsRepository) {
-        this.goodsRepository = goodsRepository;
-    }
+//    public GoodsDaoImpl(GoodsRepository goodsRepository) {
+//        this.goodsRepository = goodsRepository;
+//    }
 
     @Override
     public List<Goods> getAllGoods() {

@@ -11,6 +11,7 @@ import com.example.bookstore.util.request.RegisterForm;
 import jakarta.servlet.http.HttpServletResponse;
 import net.sf.json.JSONObject;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,11 +24,12 @@ import java.util.Objects;
 @RestController
 @Transactional
 public class AuthController {
-    private final UserService userService;
+    @Autowired
+    private UserService userService;
 
-    public AuthController(UserService userService) {
-        this.userService = userService;
-    }
+//    public AuthController(UserService userService) {
+//        this.userService = userService;
+//    }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public JSONObject login(@RequestBody LoginForm loginForm, HttpServletResponse response) {

@@ -3,17 +3,19 @@ package com.example.bookstore.service.serviceimpl;
 import com.example.bookstore.dao.TagDao;
 import com.example.bookstore.entity.Tag;
 import com.example.bookstore.service.TagService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class TagServiceImpl implements TagService {
-    private final TagDao tagDao;
+    @Autowired
+    private TagDao tagDao;
 
-    public TagServiceImpl(TagDao tagDao) {
-        this.tagDao = tagDao;
-    }
+//    public TagServiceImpl(TagDao tagDao) {
+//        this.tagDao = tagDao;
+//    }
 
     @Override
     public void addTag(Tag tag) {

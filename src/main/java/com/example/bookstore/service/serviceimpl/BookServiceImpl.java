@@ -10,6 +10,7 @@ import com.example.bookstore.entity.Tag;
 import com.example.bookstore.service.BookService;
 import com.example.bookstore.util.request.BookStatisticsForm;
 import com.example.bookstore.util.request.StatisticForm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,16 +19,18 @@ import java.util.List;
 
 @Service
 public class BookServiceImpl implements BookService {
+    @Autowired
+    private BookDao bookDao;
+    @Autowired
+    private TagDao tagDao;
+    @Autowired
+    private GoodsDao goodsDao;
 
-    private final BookDao bookDao;
-    private final TagDao tagDao;
-    private final GoodsDao goodsDao;
-
-    public BookServiceImpl(BookDao bookDao, TagDao tagDao, GoodsDao goodsDao) {
-        this.bookDao = bookDao;
-        this.tagDao = tagDao;
-        this.goodsDao = goodsDao;
-    }
+//    public BookServiceImpl(BookDao bookDao, TagDao tagDao, GoodsDao goodsDao) {
+//        this.bookDao = bookDao;
+//        this.tagDao = tagDao;
+//        this.goodsDao = goodsDao;
+//    }
 
     @Override
     public List<Book> getBooks() {

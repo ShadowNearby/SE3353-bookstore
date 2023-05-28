@@ -9,6 +9,7 @@ import com.example.bookstore.service.UserService;
 import com.example.bookstore.util.SessionUtil;
 import com.example.bookstore.util.request.*;
 import net.sf.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
@@ -16,14 +17,16 @@ import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private final UserDao userDao;
-    private final OrderDao orderDao;
+    @Autowired
+    private UserDao userDao;
+    @Autowired
+    private OrderDao orderDao;
 
 
-    public UserServiceImpl(UserDao userDao, OrderDao orderDao) {
-        this.userDao = userDao;
-        this.orderDao = orderDao;
-    }
+//    public UserServiceImpl(UserDao userDao, OrderDao orderDao) {
+//        this.userDao = userDao;
+//        this.orderDao = orderDao;
+//    }
 
     @Override
     public User handleLogin(String username, String password) {

@@ -7,6 +7,7 @@ import com.example.bookstore.util.request.StatisticForm;
 import com.example.bookstore.util.request.UserPutForm;
 import net.sf.json.JSONObject;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,11 +20,12 @@ import java.util.Objects;
 @RestController
 @Transactional
 public class UserController {
-    private final UserService userService;
+    @Autowired
+    private UserService userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+//    public UserController(UserService userService) {
+//        this.userService = userService;
+//    }
 
 
     @RequestMapping(value = "/api/user/put", method = RequestMethod.PUT)

@@ -10,6 +10,7 @@ import com.example.bookstore.util.SessionUtil;
 import com.example.bookstore.util.request.*;
 import net.sf.json.JSONObject;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,15 +21,18 @@ import java.util.Set;
 @RestController
 @Transactional
 public class AdminController {
-    private final BookService bookService;
-    private final UserService userService;
-    private final OrderService orderService;
+    @Autowired
+    private BookService bookService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private OrderService orderService;
 
-    public AdminController(BookService bookService, UserService userService, OrderService orderService) {
-        this.bookService = bookService;
-        this.userService = userService;
-        this.orderService = orderService;
-    }
+//    public AdminController(BookService bookService, UserService userService, OrderService orderService) {
+//        this.bookService = bookService;
+//        this.userService = userService;
+//        this.orderService = orderService;
+//    }
 
     @RequestMapping(value = "/admin/user/{username}", method = RequestMethod.GET)
     public User getUserByUsername(@PathVariable("username") String username) {

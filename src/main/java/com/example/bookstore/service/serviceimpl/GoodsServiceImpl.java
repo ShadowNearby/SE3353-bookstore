@@ -12,6 +12,7 @@ import com.example.bookstore.service.GoodsService;
 import com.example.bookstore.util.SessionUtil;
 import com.example.bookstore.util.request.AddGoodsForm;
 import com.example.bookstore.util.request.IdForm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,17 +20,21 @@ import java.util.Set;
 
 @Service
 public class GoodsServiceImpl implements GoodsService {
-    private final GoodsDao goodsDao;
-    private final UserDao userDao;
-    private final OrderDao orderDao;
-    private final BookDao bookDao;
+    @Autowired
+    private GoodsDao goodsDao;
+    @Autowired
+    private UserDao userDao;
+    @Autowired
+    private OrderDao orderDao;
+    @Autowired
+    private BookDao bookDao;
 
-    public GoodsServiceImpl(GoodsDao goodsDao, UserDao userDao, OrderDao orderDao, BookDao bookDao) {
-        this.goodsDao = goodsDao;
-        this.userDao = userDao;
-        this.orderDao = orderDao;
-        this.bookDao = bookDao;
-    }
+//    public GoodsServiceImpl(GoodsDao goodsDao, UserDao userDao, OrderDao orderDao, BookDao bookDao) {
+//        this.goodsDao = goodsDao;
+//        this.userDao = userDao;
+//        this.orderDao = orderDao;
+//        this.bookDao = bookDao;
+//    }
 
     @Override
     public List<Goods> getAllGoods() {
