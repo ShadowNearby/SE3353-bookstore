@@ -31,6 +31,8 @@ public class Book {
     private Double price;
     @Column(name = "inventory", length = 8, nullable = false)
     private Integer inventory;
+    @Column(name = "deleted")
+    private Boolean deleted;
     @JsonIgnoreProperties(value = {"books"})
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book_tag",
@@ -48,6 +50,7 @@ public class Book {
         this.price = price;
         this.inventory = inventory;
         this.tags = tags;
+        this.deleted = false;
     }
 
     public Book() {
@@ -63,6 +66,7 @@ public class Book {
         this.price = price;
         this.inventory = inventory;
         this.tags = tags;
+        this.deleted = false;
     }
 
     @Override

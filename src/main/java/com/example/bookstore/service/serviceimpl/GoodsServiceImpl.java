@@ -46,7 +46,7 @@ public class GoodsServiceImpl implements GoodsService {
         Long userId = SessionUtil.getUserId();
         User user = userDao.getUserById(userId);
         Set<Goods> allGoods = goodsDao.getGoodsByUser(user);
-        allGoods.removeIf(goods -> goods.getOrder() != null);
+        allGoods.removeIf(goods -> goods.getOrder() != null || goods.getBook().getDeleted());
         return allGoods;
     }
 

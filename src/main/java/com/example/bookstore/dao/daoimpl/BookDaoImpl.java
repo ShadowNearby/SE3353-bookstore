@@ -21,7 +21,8 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public List<Book> getBooks() {
-        return bookRepository.findAll();
+        return bookRepository.findBooksByDeletedNot(true);
+//        return bookRepository.findAll();
     }
 
     @Override
@@ -65,7 +66,8 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public void deleteBook(Book book) {
-        bookRepository.delete(book);
+        book.setDeleted(true);
+        bookRepository.save(book);
     }
 
 }

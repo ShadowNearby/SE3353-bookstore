@@ -79,7 +79,6 @@ public class BookServiceImpl implements BookService {
     @Override
     public void deleteBook(Long id) {
         Book book = bookDao.getBookById(id);
-        book.setTags(null);
         bookDao.deleteBook(book);
     }
 

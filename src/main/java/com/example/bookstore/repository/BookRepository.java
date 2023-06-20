@@ -12,4 +12,5 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     List<Book> findAllByTagsIn(Collection<List<Tag>> tags);
 
+    List<Book> findBooksByDeletedNot(Boolean deleted);
 }
