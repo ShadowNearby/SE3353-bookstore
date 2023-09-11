@@ -2,6 +2,7 @@ package com.example.bookstore.controller;
 
 import com.example.bookstore.constant.Constant;
 import com.example.bookstore.entity.User;
+import com.example.bookstore.service.TickerService;
 import com.example.bookstore.service.UserService;
 import com.example.bookstore.util.Message;
 import com.example.bookstore.util.SessionUtil;
@@ -12,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import net.sf.json.JSONObject;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,10 +25,14 @@ import java.util.Objects;
 
 @RestController
 @Transactional
+@Scope("session")
 public class AuthController {
     @Autowired
     private UserService userService;
 
+
+    @Autowired
+    private TickerService tickerService;
 //    public AuthController(UserService userService) {
 //        this.userService = userService;
 //    }
@@ -53,6 +59,7 @@ public class AuthController {
         message.put(Constant.USER_AVATAR, auth.getAvatar());
         message.put(Constant.MESSAGE, Constant.LOGIN_SUCCESS);
         message.put(Constant.STATE, 200);
+        tickerService.Begin();
         return message;
     }
 
@@ -73,8 +80,9 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    public void handleLogout() {
+    public ResponseEntity<Message> handleLogout() {
         SessionUtil.removeSession();
+        return ResponseEntity.status(200).body(new Message(String.format("%s秒", tickerService.End().toString())));
     }
 
     @RequestMapping(value = "/check", method = RequestMethod.POST)

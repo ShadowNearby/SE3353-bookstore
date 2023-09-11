@@ -2,7 +2,8 @@
   <configuration default="false" name="start" type="js.build_tools.npm" nameIsGenerated="true">
     <package-json value="$PROJECT_DIR$/frontend/package.json" />
     <command value="start" />
-    <node-interpreter value="project" />
+    <node-interpreter value="node" />
+    <package-manager value="npm" />
     <envs />
     <method v="2" />
   </configuration>

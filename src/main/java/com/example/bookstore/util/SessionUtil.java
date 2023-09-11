@@ -27,7 +27,6 @@ public class SessionUtil {
         if (requestAttributes != null) {
             HttpServletRequest request = requestAttributes.getRequest();
             HttpSession session = request.getSession();
-            System.out.println(session.getId());
             for (Object str : data.keySet()) {
                 String key = (String) str;
                 Object val = data.get(key);
