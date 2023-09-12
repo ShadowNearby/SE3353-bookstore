@@ -1,13 +1,8 @@
 package com.example.bookstore.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -33,15 +28,9 @@ public class Book {
     private Integer inventory;
     @Column(name = "deleted")
     private Boolean deleted;
-    @JsonIgnoreProperties(value = {"books"})
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "book_tag",
-            inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"),
-            joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id")
-    )
-    private List<Tag> tags;
 
-    public Book(String name, String image, String description, String author, String ISBN, Double price, Integer inventory, List<Tag> tags) {
+
+    public Book(String name, String image, String description, String author, String ISBN, Double price, Integer inventory) {
         this.name = name;
         this.image = image;
         this.author = author;
@@ -49,14 +38,13 @@ public class Book {
         this.ISBN = ISBN;
         this.price = price;
         this.inventory = inventory;
-        this.tags = tags;
         this.deleted = false;
     }
 
     public Book() {
     }
 
-    public Book(Long id, String name, String image, String description, String author, String ISBN, Double price, Integer inventory, List<Tag> tags) {
+    public Book(Long id, String name, String image, String description, String author, String ISBN, Double price, Integer inventory) {
         this.id = id;
         this.name = name;
         this.image = image;
@@ -65,23 +53,6 @@ public class Book {
         this.ISBN = ISBN;
         this.price = price;
         this.inventory = inventory;
-        this.tags = tags;
         this.deleted = false;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Book book = (Book) o;
-
-        return new EqualsBuilder().append(id, book.id).append(name, book.name).append(image, book.image).append(description, book.description).append(author, book.author).append(ISBN, book.ISBN).append(price, book.price).append(inventory, book.inventory).append(tags, book.tags).isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(id).append(name).append(image).append(description).append(author).append(ISBN).append(price).append(inventory).append(tags).toHashCode();
     }
 }

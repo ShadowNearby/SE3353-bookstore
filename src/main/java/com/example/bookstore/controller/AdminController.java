@@ -42,13 +42,13 @@ public class AdminController {
     @RequestMapping(value = "/admin/book/add", method = RequestMethod.POST)
     public void addBook(@RequestBody @NotNull AddBookForm addBookForm
     ) {
-        bookService.addBook(addBookForm.getName(), addBookForm.getImage(), addBookForm.getDescription(), addBookForm.getAuthor(), addBookForm.getIsbn(), addBookForm.getPrice(), addBookForm.getInventory(), addBookForm.getTagIds());
+        bookService.addBook(addBookForm.getName(), addBookForm.getImage(), addBookForm.getDescription(), addBookForm.getAuthor(), addBookForm.getIsbn(), addBookForm.getPrice(), addBookForm.getInventory());
     }
 
     @RequestMapping(value = "/admin/book/put", method = RequestMethod.PUT)
     public void putBook(@RequestBody @NotNull PutBookForm putBookForm
     ) {
-        bookService.putBook(putBookForm.getId(), putBookForm.getName(), putBookForm.getImage(), putBookForm.getDescription(), putBookForm.getAuthor(), putBookForm.getIsbn(), putBookForm.getPrice(), putBookForm.getInventory(), putBookForm.getTagIds());
+        bookService.putBook(putBookForm.getId(), putBookForm.getName(), putBookForm.getImage(), putBookForm.getDescription(), putBookForm.getAuthor(), putBookForm.getIsbn(), putBookForm.getPrice(), putBookForm.getInventory());
     }
 
     @RequestMapping(value = "/admin/book/delete", method = RequestMethod.DELETE)

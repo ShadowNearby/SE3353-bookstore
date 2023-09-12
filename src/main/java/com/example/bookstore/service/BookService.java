@@ -14,11 +14,10 @@ public interface BookService {
 
     Book getBookByName(String name);
 
-    List<Book> getBooksByTagNames(List<String> tagNames);
 
-    void addBook(String name, String image, String desc, String author, String isbn, Double price, Integer inventory, List<Long> tagIds);
+    void addBook(String name, String image, String desc, String author, String isbn, Double price, Integer inventory);
 
-    void putBook(Long id, String name, String image, String desc, String author, String isbn, Double price, Integer inventory, List<Long> tagIds);
+    void putBook(Long id, String name, String image, String desc, String author, String isbn, Double price, Integer inventory);
 
     void deleteBook(Long id);
 

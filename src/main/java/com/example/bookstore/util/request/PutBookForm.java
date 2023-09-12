@@ -1,9 +1,6 @@
 package com.example.bookstore.util.request;
 
 
-import java.util.List;
-
-
 public class PutBookForm {
     private Long id;
     private String name;
@@ -13,7 +10,6 @@ public class PutBookForm {
     private String isbn;
     private Double price;
     private Integer inventory;
-    private List<Long> tagIds;
 
     public Long getId() {
         return id;
@@ -77,13 +73,5 @@ public class PutBookForm {
 
     public void setInventory(Integer inventory) {
         this.inventory = inventory;
-    }
-
-    public List<Long> getTagIds() {
-        return tagIds;
-    }
-
-    public void setTagIds(List<Long> tagIds) {
-        this.tagIds = tagIds;
     }
 }

@@ -23,11 +23,7 @@ public class BookController {
     public Book getBookById(@PathVariable("bookId") Long bookId) {
         return bookService.getBookById(bookId);
     }
-
-    @RequestMapping(value = "/api/books", method = RequestMethod.GET, params = {"tag_names"})
-    public List<Book> getBooksByTagNames(@RequestParam("tag_names") List<String> tagNames) {
-        return bookService.getBooksByTagNames(tagNames);
-    }
+    
 
     @RequestMapping(value = "/api/books", method = RequestMethod.GET)
     public List<Book> getAllBooks() {

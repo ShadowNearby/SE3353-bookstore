@@ -2,12 +2,10 @@ package com.example.bookstore.dao.daoimpl;
 
 import com.example.bookstore.dao.BookDao;
 import com.example.bookstore.entity.Book;
-import com.example.bookstore.entity.Tag;
 import com.example.bookstore.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -40,10 +38,6 @@ public class BookDaoImpl implements BookDao {
         return bookRepository.findByName(name);
     }
 
-    @Override
-    public List<Book> getBooksByTags(List<Tag> tags) {
-        return bookRepository.findAllByTagsIn(Collections.singleton(tags));
-    }
 
     @Override
     public Integer addInventory(String name, Integer count) {
