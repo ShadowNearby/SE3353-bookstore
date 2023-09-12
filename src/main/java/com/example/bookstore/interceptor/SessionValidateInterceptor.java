@@ -32,13 +32,13 @@ public class SessionValidateInterceptor implements HandlerInterceptor {
         return true;
     }
 
-    private void sendJsonBack(HttpServletResponse response, Message message) {
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
-        try (PrintWriter writer = response.getWriter()) {
-            writer.print(JSONObject.fromObject(message));
-        } catch (IOException e) {
-            System.out.println("send json back error");
-        }
-    }
+//    private void sendJsonBack(HttpServletResponse response, Message message) {
+//        response.setCharacterEncoding("UTF-8");
+//        response.setContentType("application/json; charset=utf-8");
+//        try (PrintWriter writer = response.getWriter()) {
+//            writer.print(JSONObject.fromObject(message));
+//        } catch (IOException e) {
+//            System.out.println("send json back error");
+//        }
+//    }
 }

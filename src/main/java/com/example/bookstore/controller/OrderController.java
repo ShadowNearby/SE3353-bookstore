@@ -33,7 +33,8 @@ public class OrderController {
     @RequestMapping(value = "/api/order/add", method = RequestMethod.POST)
     public void addOrder(@RequestBody @NotNull AddOrderForm addOrderForm) {
         Long userId = SessionUtil.getUserId();
-        kafkaTemplate.send("test", userId.toString(), addOrderForm);
+        kafkaTemplate.send("topic", userId.toString(), addOrderForm);
+        System.out.println(123);
     }
 
 //    @KafkaListener(topics = {"test"}, concurrency = "12")
