@@ -24,11 +24,8 @@ public class Order {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
     @JsonIgnoreProperties(value = {"order"})
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "order", cascade = CascadeType.ALL)
     private Set<Goods> goodsList;
-//    @OneToOne
-//    @JoinColumn(name = "receiver_id", foreignKey = @ForeignKey(name = "order_fk_receiver_id"))
-//    private Receiver receiver;
 
     public Order() {
     }

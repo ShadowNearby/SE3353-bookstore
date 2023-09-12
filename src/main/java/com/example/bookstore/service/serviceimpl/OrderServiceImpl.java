@@ -20,21 +20,17 @@ import java.util.Set;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-    @Autowired
-    private OrderDao orderDao;
-    @Autowired
-    private UserDao userDao;
-    @Autowired
-    private GoodsDao goodsDao;
-    @Autowired
-    private BookDao bookDao;
+    private final OrderDao orderDao;
+    private final UserDao userDao;
+    private final GoodsDao goodsDao;
+    private final BookDao bookDao;
 
-//    public OrderServiceImpl(OrderDao orderDao, UserDao userDao, GoodsDao goodsDao, BookDao bookDao) {
-//        this.orderDao = orderDao;
-//        this.userDao = userDao;
-//        this.goodsDao = goodsDao;
-//        this.bookDao = bookDao;
-//    }
+    public OrderServiceImpl(OrderDao orderDao, UserDao userDao, GoodsDao goodsDao, BookDao bookDao) {
+        this.orderDao = orderDao;
+        this.userDao = userDao;
+        this.goodsDao = goodsDao;
+        this.bookDao = bookDao;
+    }
 
     @Override
     public Set<Order> getOrderByUserId(Long userId) {
@@ -43,7 +39,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void addOrder(AddOrderForm addOrderForm) {
-        Long userId = SessionUtil.getUserId();
+        Long userId = addOrderForm.getUserId();
         User user = userDao.getUserById(userId);
         Set<Goods> goodsSet = goodsDao.getGoodsByIds(addOrderForm.getGoodsIds());
         Order order = orderDao.addOrder(new Order(user, goodsSet));
@@ -65,6 +61,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Set<Order> getOrder() {
         Long userId = SessionUtil.getUserId();
-        return orderDao.getOrdersByUserId(userId);
+        var orders = orderDao.getOrdersByUserId(userId);
+        return orders;
     }
 }
