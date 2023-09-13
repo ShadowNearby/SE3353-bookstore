@@ -2,7 +2,7 @@ package com.example.bookstore.service.serviceimpl;
 
 import com.example.bookstore.dao.OrderDao;
 import com.example.bookstore.dao.UserDao;
-import com.example.bookstore.entity.Goods;
+import com.example.bookstore.entity.OrderItem;
 import com.example.bookstore.entity.Order;
 import com.example.bookstore.entity.User;
 import com.example.bookstore.service.UserService;
@@ -98,12 +98,12 @@ public class UserServiceImpl implements UserService {
             if (orderTime.getTime() < statisticForm.getBeginDate().getTime() || orderTime.getTime() > statisticForm.getEndDate().getTime())
                 continue;
             String username = order.getUser().getUsername();
-            Set<Goods> goodsList = order.getGoodsList();
+            Set<OrderItem> orderItemList = order.getOrderItemList();
             double spend = 0.0;
             if (spendMap.containsKey(username))
                 spend = spendMap.get(username);
-            for (Goods goods : goodsList) {
-                spend += goods.getBook().getPrice() * goods.getCount();
+            for (OrderItem orderItem : orderItemList) {
+                spend += orderItem.getBook().getPrice() * orderItem.getCount();
             }
             spendMap.put(username, spend);
         }
@@ -131,17 +131,17 @@ public class UserServiceImpl implements UserService {
         for (Order order : orderList) {
             if (order == null || order.getOrderTime().getTime() < statisticForm.getBeginDate().getTime() || order.getOrderTime().getTime() > statisticForm.getEndDate().getTime())
                 continue;
-            List<Goods> goodsList = new ArrayList<>(order.getGoodsList());
-            for (Goods goods : goodsList) {
-                String key = goods.getBook().getName();
-                spend += goods.getBook().getPrice() * goods.getCount();
+            List<OrderItem> orderItemList = new ArrayList<>(order.getOrderItemList());
+            for (OrderItem orderItem : orderItemList) {
+                String key = orderItem.getBook().getName();
+                spend += orderItem.getBook().getPrice() * orderItem.getCount();
                 boolean exist = nameCountMap.containsKey(key);
                 if (exist) {
                     Integer value = nameCountMap.get(key);
-                    value += goods.getCount();
+                    value += orderItem.getCount();
                     nameCountMap.put(key, value);
                 } else {
-                    nameCountMap.put(key, goods.getCount());
+                    nameCountMap.put(key, orderItem.getCount());
                 }
             }
         }

@@ -39,15 +39,14 @@ public class OrderController {
 
     @RequestMapping(value = "/api/order/add", method = RequestMethod.POST)
     public void addOrder(@RequestBody @NotNull AddOrderForm addOrderForm) {
-        log.warn("receive request from frontend");
         Long userId = SessionUtil.getUserId();
         addOrderForm.setUserId(userId);
         kafkaTemplate.send("test", userId.toString(), addOrderForm);
-        log.warn("send order to kafka {}", addOrderForm);
+        log.info("send order to kafka {}", addOrderForm);
     }
     @KafkaListener(topics = "test")
     public void receiveAddOrder(@NotNull ConsumerRecord<String, AddOrderForm> consumerRecord) {
-        log.warn("receive order from kafka {}",consumerRecord.value().toString());
+        log.info("receive order from kafka {}",consumerRecord.value().toString());
         orderService.addOrder(consumerRecord.value());
     }
     @RequestMapping(value = "/api/order", method = RequestMethod.GET)

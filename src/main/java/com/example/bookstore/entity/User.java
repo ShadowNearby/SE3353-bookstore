@@ -32,7 +32,7 @@ public class User {
     private List<Order> orderList;
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Goods> goodsList;
+    private List<OrderItem> orderItems;
     @JsonIgnore
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserAuth userAuth;

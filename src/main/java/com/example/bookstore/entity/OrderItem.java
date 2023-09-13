@@ -1,7 +1,6 @@
 package com.example.bookstore.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,8 +8,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "goods")
-public class Goods {
+@Table(name = "order_item")
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,20 +27,20 @@ public class Goods {
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Order order;
 
-    public Goods(Integer count, Book book, User user, Order order) {
+    public OrderItem(Integer count, Book book, User user, Order order) {
         this.count = count;
         this.book = book;
         this.user = user;
         this.order = order;
     }
 
-    public Goods(Integer count, Book book, User user) {
+    public OrderItem(Integer count, Book book, User user) {
         this.count = count;
         this.book = book;
         this.user = user;
     }
 
-    public Goods() {
+    public OrderItem() {
 
     }
 }

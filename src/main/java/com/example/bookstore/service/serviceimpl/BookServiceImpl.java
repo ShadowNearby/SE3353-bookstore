@@ -1,14 +1,13 @@
 package com.example.bookstore.service.serviceimpl;
 
 import com.example.bookstore.dao.BookDao;
-import com.example.bookstore.dao.GoodsDao;
+import com.example.bookstore.dao.OrderItemDao;
 import com.example.bookstore.entity.Book;
-import com.example.bookstore.entity.Goods;
+import com.example.bookstore.entity.OrderItem;
 import com.example.bookstore.entity.Order;
 import com.example.bookstore.service.BookService;
 import com.example.bookstore.util.request.BookStatisticsForm;
 import com.example.bookstore.util.request.StatisticForm;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,15 +16,13 @@ import java.util.List;
 
 @Service
 public class BookServiceImpl implements BookService {
-    @Autowired
-    private BookDao bookDao;
-    @Autowired
-    private GoodsDao goodsDao;
+    private final BookDao bookDao;
+    private final OrderItemDao orderItemDao;
 
-//    public BookServiceImpl(BookDao bookDao, GoodsDao goodsDao) {
-//        this.bookDao = bookDao;
-//        this.goodsDao = goodsDao;
-//    }
+    public BookServiceImpl(BookDao bookDao, OrderItemDao orderItemDao) {
+        this.bookDao = bookDao;
+        this.orderItemDao = orderItemDao;
+    }
 
     @Override
     public List<Book> getBooks() {
@@ -70,20 +67,20 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookStatisticsForm> statistics(StatisticForm statisticForm) {
-        List<Goods> goodsList = goodsDao.getAllGoods();
+        List<OrderItem> orderItemList = orderItemDao.getAllOrderItem();
         HashMap<String, Integer> nameCountMap = new HashMap<>();
-        for (Goods goods : goodsList) {
-            Order order = goods.getOrder();
+        for (OrderItem orderItem : orderItemList) {
+            Order order = orderItem.getOrder();
             if (order == null || order.getOrderTime().getTime() < statisticForm.getBeginDate().getTime() || order.getOrderTime().getTime() > statisticForm.getEndDate().getTime())
                 continue;
-            String key = goods.getBook().getName();
+            String key = orderItem.getBook().getName();
             boolean exist = nameCountMap.containsKey(key);
             if (exist) {
                 Integer value = nameCountMap.get(key);
-                value += goods.getCount();
+                value += orderItem.getCount();
                 nameCountMap.put(key, value);
             } else {
-                nameCountMap.put(key, goods.getCount());
+                nameCountMap.put(key, orderItem.getCount());
             }
         }
         List<BookStatisticsForm> bookStatisticsForms = new ArrayList<>();

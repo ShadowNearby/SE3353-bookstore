@@ -25,14 +25,14 @@ public class Order {
     private User user;
     @JsonIgnoreProperties(value = {"order"})
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "order", cascade = CascadeType.ALL)
-    private Set<Goods> goodsList;
+    private Set<OrderItem> orderItemList;
 
     public Order() {
     }
 
-    public Order(User user, Set<Goods> goodsList) {
+    public Order(User user, Set<OrderItem> orderItemSet) {
         this.user = user;
-        this.goodsList = goodsList;
+        this.orderItemList = orderItemSet;
         this.orderTime = new Date();
     }
 }
