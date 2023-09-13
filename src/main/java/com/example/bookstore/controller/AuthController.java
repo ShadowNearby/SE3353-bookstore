@@ -12,7 +12,6 @@ import com.example.bookstore.util.request.RegisterForm;
 import jakarta.servlet.http.HttpServletResponse;
 import net.sf.json.JSONObject;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;

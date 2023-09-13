@@ -7,7 +7,6 @@ import com.example.bookstore.util.request.StatisticForm;
 import com.example.bookstore.util.request.UserPutForm;
 import net.sf.json.JSONObject;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;

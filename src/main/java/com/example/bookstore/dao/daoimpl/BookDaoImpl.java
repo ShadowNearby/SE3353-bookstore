@@ -3,7 +3,6 @@ package com.example.bookstore.dao.daoimpl;
 import com.example.bookstore.dao.BookDao;
 import com.example.bookstore.entity.Book;
 import com.example.bookstore.repository.BookRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

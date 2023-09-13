@@ -10,7 +10,6 @@ import com.example.bookstore.util.SessionUtil;
 import com.example.bookstore.util.request.*;
 import net.sf.json.JSONObject;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 

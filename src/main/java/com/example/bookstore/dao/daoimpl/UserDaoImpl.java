@@ -7,7 +7,6 @@ import com.example.bookstore.entity.UserAuth;
 import com.example.bookstore.repository.UserAuthRepository;
 import com.example.bookstore.repository.UserRepository;
 import com.example.bookstore.util.request.RegisterForm;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.DigestUtils;
 
