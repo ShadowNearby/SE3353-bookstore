@@ -12,12 +12,11 @@ import java.util.Set;
 
 @Repository
 public class OrderDaoImpl implements OrderDao {
-    @Autowired
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
-//    public OrderDaoImpl(OrderRepository orderRepository) {
-//        this.orderRepository = orderRepository;
-//    }
+    public OrderDaoImpl(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
 
     @Override
     public Set<Order> getOrdersByUserId(Long userId) {

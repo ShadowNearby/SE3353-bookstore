@@ -10,12 +10,11 @@ import java.util.List;
 
 @Repository
 public class BookDaoImpl implements BookDao {
-    @Autowired
-    private BookRepository bookRepository;
+    private final BookRepository bookRepository;
 
-//    public BookDaoImpl(BookRepository bookRepository) {
-//        this.bookRepository = bookRepository;
-//    }
+    public BookDaoImpl(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
 
     @Override
     public List<Book> getBooks() {

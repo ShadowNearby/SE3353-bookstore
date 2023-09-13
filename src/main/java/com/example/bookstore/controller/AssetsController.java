@@ -17,12 +17,11 @@ import java.io.OutputStream;
 @RestController
 @Transactional
 public class AssetsController {
-    @Autowired
-    private AssetsService assetsService;
+    private final AssetsService assetsService;
 
-//    public AssetsController(AssetsService assetsService) {
-//        this.assetsService = assetsService;
-//    }
+    public AssetsController(AssetsService assetsService) {
+        this.assetsService = assetsService;
+    }
 
     @RequestMapping(value = "/assets/image", method = RequestMethod.POST)
     public JSONObject imagePost(@RequestParam("file") MultipartFile file) throws IOException {

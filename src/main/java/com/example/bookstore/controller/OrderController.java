@@ -32,11 +32,6 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    //    @RequestMapping(value = "/api/order/add", method = RequestMethod.POST)
-    //    public void addOrder(@RequestBody @NotNull AddOrderForm addOrderForm) {
-    //        orderService.addOrder(addOrderForm);
-    //    }
-
     @RequestMapping(value = "/api/order/add", method = RequestMethod.POST)
     public void addOrder(@RequestBody @NotNull AddOrderForm addOrderForm) {
         Long userId = SessionUtil.getUserId();

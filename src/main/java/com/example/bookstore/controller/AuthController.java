@@ -27,15 +27,12 @@ import java.util.Objects;
 @Transactional
 @Scope("session")
 public class AuthController {
-    @Autowired
-    private UserService userService;
-
-
-    @Autowired
-    private TickerService tickerService;
-//    public AuthController(UserService userService) {
-//        this.userService = userService;
-//    }
+    private final UserService userService;
+    private final TickerService tickerService;
+    public AuthController(UserService userService, TickerService tickerService) {
+        this.userService = userService;
+        this.tickerService = tickerService;
+    }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public JSONObject login(@RequestBody LoginForm loginForm, HttpServletResponse response) {

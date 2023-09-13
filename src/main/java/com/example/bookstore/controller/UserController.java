@@ -20,12 +20,11 @@ import java.util.Objects;
 @RestController
 @Transactional
 public class UserController {
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-//    public UserController(UserService userService) {
-//        this.userService = userService;
-//    }
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
 
     @RequestMapping(value = "/api/user/put", method = RequestMethod.PUT)

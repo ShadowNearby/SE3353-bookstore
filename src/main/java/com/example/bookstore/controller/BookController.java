@@ -11,13 +11,11 @@ import java.util.List;
 @RestController
 @Transactional
 public class BookController {
-    @Autowired
-    private BookService bookService;
+    private final BookService bookService;
 
-
-//    public BookController(BookService bookService) {
-//        this.bookService = bookService;
-//    }
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
+    }
 
     @RequestMapping(value = "/api/book/{bookId}", method = RequestMethod.GET)
     public Book getBookById(@PathVariable("bookId") Long bookId) {

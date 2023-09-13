@@ -18,15 +18,13 @@ import java.util.Set;
 
 @Repository
 public class UserDaoImpl implements UserDao {
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private UserAuthRepository userAuthRepository;
+    private final UserRepository userRepository;
+    private final UserAuthRepository userAuthRepository;
 
-//    public UserDaoImpl(UserRepository userRepository, UserAuthRepository userAuthRepository) {
-//        this.userRepository = userRepository;
-//        this.userAuthRepository = userAuthRepository;
-//    }
+    public UserDaoImpl(UserRepository userRepository, UserAuthRepository userAuthRepository) {
+        this.userRepository = userRepository;
+        this.userAuthRepository = userAuthRepository;
+    }
 
     @Override
     public Optional<User> findUserByUsername(String username) {

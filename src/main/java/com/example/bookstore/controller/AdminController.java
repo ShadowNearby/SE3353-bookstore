@@ -21,18 +21,15 @@ import java.util.Set;
 @RestController
 @Transactional
 public class AdminController {
-    @Autowired
-    private BookService bookService;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private OrderService orderService;
+    private final BookService bookService;
+    private final UserService userService;
+    private final OrderService orderService;
 
-//    public AdminController(BookService bookService, UserService userService, OrderService orderService) {
-//        this.bookService = bookService;
-//        this.userService = userService;
-//        this.orderService = orderService;
-//    }
+    public AdminController(BookService bookService, UserService userService, OrderService orderService) {
+        this.bookService = bookService;
+        this.userService = userService;
+        this.orderService = orderService;
+    }
 
     @RequestMapping(value = "/admin/user/{username}", method = RequestMethod.GET)
     public User getUserByUsername(@PathVariable("username") String username) {
