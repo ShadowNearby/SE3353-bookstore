@@ -32,7 +32,7 @@ public class WebSocketServer {
             webSocketMap.put(userId, this);
             addOnlineCount();
         }
-        log.info("用户连接:" + userId + ",当前在线人数为:" + getOnlineCount());
+        log.info("订单socket连接 用户id:" + userId + ",当前在线人数为:" + getOnlineCount());
 //        try {
 //            sendMessageTo("连接成功！",userId);
 //        } catch (IOException e) {
@@ -46,7 +46,7 @@ public class WebSocketServer {
             webSocketMap.remove(userId);
             subOnlineCount();
         }
-        log.info("用户退出:" + userId + ",当前在线人数为:" + getOnlineCount());
+        log.info("订单socket断开 用户id:" + userId + ",当前在线人数为:" + getOnlineCount());
     }
 
     @OnMessage
