@@ -4,6 +4,7 @@ import com.example.bookstore.entity.Order;
 import com.example.bookstore.service.OrderService;
 import com.example.bookstore.util.SessionUtil;
 import com.example.bookstore.util.request.AddOrderForm;
+import com.example.bookstore.websocket.WebSocketServer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -16,7 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.*;
+import java.io.IOException;
+import java.util.Set;
 
 
 @RestController
@@ -25,11 +27,13 @@ public class OrderController {
     private final KafkaTemplate<String, AddOrderForm> kafkaTemplate;
 
     private final OrderService orderService;
-
+    private final WebSocketServer webSocketServer;
     private final Logger log = LoggerFactory.getLogger(OrderController.class);
-    public OrderController(KafkaTemplate<String, AddOrderForm> kafkaTemplate, OrderService orderService) {
+
+    public OrderController(KafkaTemplate<String, AddOrderForm> kafkaTemplate, OrderService orderService, WebSocketServer webSocketServer) {
         this.kafkaTemplate = kafkaTemplate;
         this.orderService = orderService;
+        this.webSocketServer = webSocketServer;
     }
 
     @RequestMapping(value = "/api/order/add", method = RequestMethod.POST)
@@ -39,17 +43,18 @@ public class OrderController {
         kafkaTemplate.send("test", userId.toString(), addOrderForm);
         log.info("send order to kafka {}", addOrderForm);
     }
+
     @KafkaListener(topics = "test")
-    public void receiveAddOrder(@NotNull ConsumerRecord<String, AddOrderForm> consumerRecord) {
-        log.info("receive order from kafka {}",consumerRecord.value().toString());
-        orderService.addOrder(consumerRecord.value());
+    public void receiveAddOrder(@NotNull ConsumerRecord<String, AddOrderForm> consumerRecord) throws IOException {
+        log.info("receive order from kafka {}", consumerRecord.value().toString());
+        AddOrderForm addOrderForm = consumerRecord.value();
+        orderService.addOrder(addOrderForm);
+        webSocketServer.sendMessageTo("订单处理成功", addOrderForm.getUserId());
     }
+
     @RequestMapping(value = "/api/order", method = RequestMethod.GET)
     public Set<Order> getOrder() {
         return orderService.getOrderByUserId(SessionUtil.getUserId());
     }
-
-
-
 
 }
