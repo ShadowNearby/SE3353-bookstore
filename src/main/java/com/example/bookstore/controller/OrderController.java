@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.io.IOException;
 import java.util.Set;
@@ -26,13 +27,13 @@ import java.util.Set;
 public class OrderController {
     private final KafkaTemplate<String, AddOrderForm> kafkaTemplate;
 
-    private final OrderService orderService;
+    private final WebApplicationContext applicationContext;
     private final WebSocketServer webSocketServer;
     private final Logger log = LoggerFactory.getLogger(OrderController.class);
 
-    public OrderController(KafkaTemplate<String, AddOrderForm> kafkaTemplate, OrderService orderService, WebSocketServer webSocketServer) {
+    public OrderController(KafkaTemplate<String, AddOrderForm> kafkaTemplate, WebApplicationContext applicationContext, WebSocketServer webSocketServer) {
         this.kafkaTemplate = kafkaTemplate;
-        this.orderService = orderService;
+        this.applicationContext = applicationContext;
         this.webSocketServer = webSocketServer;
     }
 
@@ -48,13 +49,13 @@ public class OrderController {
     public void receiveAddOrder(@NotNull ConsumerRecord<String, AddOrderForm> consumerRecord) throws IOException {
         log.info("receive order from kafka {}", consumerRecord.value().toString());
         AddOrderForm addOrderForm = consumerRecord.value();
-        orderService.addOrder(addOrderForm);
+        applicationContext.getBean(OrderService.class).addOrder(addOrderForm);
         webSocketServer.sendMessageTo("订单处理成功", addOrderForm.getUserId());
     }
 
     @RequestMapping(value = "/api/order", method = RequestMethod.GET)
     public Set<Order> getOrder() {
-        return orderService.getOrderByUserId(SessionUtil.getUserId());
+        return applicationContext.getBean(OrderService.class).getOrderByUserId(SessionUtil.getUserId());
     }
 
 }

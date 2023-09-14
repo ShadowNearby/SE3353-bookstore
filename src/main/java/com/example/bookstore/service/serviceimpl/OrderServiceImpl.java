@@ -1,17 +1,18 @@
 package com.example.bookstore.service.serviceimpl;
 
 import com.example.bookstore.dao.BookDao;
-import com.example.bookstore.dao.OrderItemDao;
 import com.example.bookstore.dao.OrderDao;
+import com.example.bookstore.dao.OrderItemDao;
 import com.example.bookstore.dao.UserDao;
 import com.example.bookstore.entity.Book;
-import com.example.bookstore.entity.OrderItem;
 import com.example.bookstore.entity.Order;
+import com.example.bookstore.entity.OrderItem;
 import com.example.bookstore.entity.User;
 import com.example.bookstore.service.OrderService;
 import com.example.bookstore.util.SessionUtil;
 import com.example.bookstore.util.request.AddOrderForm;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public void addOrder(AddOrderForm addOrderForm) {
         Long userId = addOrderForm.getUserId();
         User user = userDao.getUserById(userId);
