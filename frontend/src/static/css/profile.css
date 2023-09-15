@@ -1,0 +1,7 @@
+.profile-textinput {
+    color: #000000;
+    width: 500px;
+    margin-bottom: var(--dl-space-space-unit);
+    margin-top: var(--dl-space-space-unit);
+    border-style: hidden;
+}
