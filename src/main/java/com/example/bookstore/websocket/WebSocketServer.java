@@ -1,9 +1,10 @@
 package com.example.bookstore.websocket;
 
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import jakarta.websocket.*;
 import jakarta.websocket.server.PathParam;
 import jakarta.websocket.server.ServerEndpoint;
-import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -54,7 +55,7 @@ public class WebSocketServer {
         log.info("用户消息:" + userId + ",报文:" + message);
         if (!message.isEmpty()) {
             try {
-                JSONObject jsonObject = JSONObject.fromObject(message);
+                JSONObject jsonObject = JSON.parseObject(message);
                 jsonObject.put("fromUserId", this.userId);
                 Long toUserId = Long.valueOf(jsonObject.getString("toUserId"));
                 if (webSocketMap.containsKey(toUserId)) {
