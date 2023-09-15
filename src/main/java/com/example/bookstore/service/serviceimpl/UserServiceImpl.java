@@ -1,15 +1,14 @@
 package com.example.bookstore.service.serviceimpl;
 
+import com.alibaba.fastjson2.JSONObject;
 import com.example.bookstore.dao.OrderDao;
 import com.example.bookstore.dao.UserDao;
-import com.example.bookstore.entity.OrderItem;
 import com.example.bookstore.entity.Order;
+import com.example.bookstore.entity.OrderItem;
 import com.example.bookstore.entity.User;
 import com.example.bookstore.service.UserService;
 import com.example.bookstore.util.SessionUtil;
 import com.example.bookstore.util.request.*;
-import net.sf.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
@@ -17,16 +16,14 @@ import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
-    @Autowired
-    private UserDao userDao;
-    @Autowired
-    private OrderDao orderDao;
+    private final UserDao userDao;
+    private final OrderDao orderDao;
 
 
-//    public UserServiceImpl(UserDao userDao, OrderDao orderDao) {
-//        this.userDao = userDao;
-//        this.orderDao = orderDao;
-//    }
+    public UserServiceImpl(UserDao userDao, OrderDao orderDao) {
+        this.userDao = userDao;
+        this.orderDao = orderDao;
+    }
 
     @Override
     public User handleLogin(String username, String password) {

@@ -1,9 +1,9 @@
 package com.example.bookstore.util;
 
+import com.alibaba.fastjson2.JSONObject;
 import com.example.bookstore.constant.Constant;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import net.sf.json.JSONObject;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -27,10 +27,9 @@ public class SessionUtil {
         if (requestAttributes != null) {
             HttpServletRequest request = requestAttributes.getRequest();
             HttpSession session = request.getSession();
-            for (Object str : data.keySet()) {
-                String key = (String) str;
-                Object val = data.get(key);
-                session.setAttribute(key, val);
+            for (String str : data.keySet()) {
+                Object val = data.get(str);
+                session.setAttribute(str, val);
             }
         }
     }
@@ -54,7 +53,6 @@ public class SessionUtil {
         assert requestAttributes != null;
         HttpServletRequest request = requestAttributes.getRequest();
         HttpSession session = request.getSession(false);
-        Integer userId = (Integer) session.getAttribute("userId");
-        return userId.longValue();
+        return (Long) session.getAttribute("userId");
     }
 }

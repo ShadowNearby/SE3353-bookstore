@@ -6,7 +6,7 @@ public class Constant {
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
     public static final String USER_TYPE = "userType";
-    public static final Object USER_AVATAR = "userAvatar";
+    public static final String USER_AVATAR = "userAvatar";
     public static final String REMEMBER_ME = "remember";
     public static final String JSESSIONID = "JSESSIONID";
     public static final String LOGIN_ERROR = "账户名或密码错误";

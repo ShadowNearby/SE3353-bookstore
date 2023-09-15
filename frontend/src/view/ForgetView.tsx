@@ -9,7 +9,7 @@ import { validateEmail } from "../utility/textCheck";
 
 export const ForgetView = () => {
   const navigate = useNavigate();
-  const [account, setAccount] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const [email, setEmail] = useState("");
@@ -26,9 +26,9 @@ export const ForgetView = () => {
             required
             placeholder="账号"
             className="register-textinput input"
-            value={account}
+            value={username}
             onChange={(e) => {
-              setAccount(e.target.value);
+              setUsername(e.target.value);
               !e.target.value && password && rePassword && validateEmail(email)
                 ? setDisabled(true)
                 : setDisabled(false);
@@ -42,7 +42,10 @@ export const ForgetView = () => {
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
-              rePassword && password && account && validateEmail(e.target.value)
+              rePassword &&
+              password &&
+              username &&
+              validateEmail(e.target.value)
                 ? setDisabled(true)
                 : setDisabled(false);
             }}
@@ -55,7 +58,7 @@ export const ForgetView = () => {
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
-              !e.target.value && rePassword && account && validateEmail(email)
+              !e.target.value && rePassword && username && validateEmail(email)
                 ? setDisabled(true)
                 : setDisabled(false);
             }}
@@ -68,7 +71,7 @@ export const ForgetView = () => {
             value={rePassword}
             onChange={(e) => {
               setRePassword(e.target.value);
-              !e.target.value && password && account && validateEmail(email)
+              !e.target.value && password && username && validateEmail(email)
                 ? setDisabled(true)
                 : setDisabled(false);
             }}
@@ -86,7 +89,7 @@ export const ForgetView = () => {
                   .then(() => setRePassword(""));
                 return;
               }
-              handleForget(account, password, email).then((res: IMessage) => {
+              handleForget(username, password, email).then((res: IMessage) => {
                 if (res.message !== "OK") {
                   messageApi
                     .error(<Alert message={res.message} type={"error"} />, 2)

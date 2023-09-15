@@ -26,15 +26,17 @@ public class TickerServiceImpl implements TickerService {
     public void Begin() {
         count = 0;
         timer.purge();
-        if (task == null) {
-            task = new TimerTask() {
-                @Override
-                public void run() {
-                    count++;
-                }
-            };
+        if (task != null) {
+            task.cancel();
         }
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                count++;
+            }
+        };
         timer.schedule(task, 0, 1000);
+
     }
 
     @Override

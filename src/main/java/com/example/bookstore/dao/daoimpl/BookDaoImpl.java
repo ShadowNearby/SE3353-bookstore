@@ -3,6 +3,8 @@ package com.example.bookstore.dao.daoimpl;
 import com.example.bookstore.dao.BookDao;
 import com.example.bookstore.entity.Book;
 import com.example.bookstore.repository.BookRepository;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -10,9 +12,13 @@ import java.util.List;
 @Repository
 public class BookDaoImpl implements BookDao {
     private final BookRepository bookRepository;
+    private final RedisTemplate redisTemplate;
+    private final HashOperations hashOperations;
 
-    public BookDaoImpl(BookRepository bookRepository) {
+    public BookDaoImpl(BookRepository bookRepository, RedisTemplate redisTemplate) {
         this.bookRepository = bookRepository;
+        this.redisTemplate = redisTemplate;
+        this.hashOperations = redisTemplate.opsForHash();
     }
 
     @Override

@@ -7,9 +7,11 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface UserDao {
-    Optional<User> findUserByUsername(String account);
+    Optional<User> findUserByUsername(String username);
 
-    User getUserByUsername(String account);
+    Optional<User> findUserByEmail(String email);
+
+    User getUserByUsername(String username);
 
     User getUserById(Long id);
 
@@ -17,7 +19,6 @@ public interface UserDao {
 
     void updateUser(User user);
 
-    Optional<User> findUserByEmail(String email);
 
     Set<User> getAllUsers();
 }

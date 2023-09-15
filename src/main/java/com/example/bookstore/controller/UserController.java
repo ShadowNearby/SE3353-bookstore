@@ -1,11 +1,11 @@
 package com.example.bookstore.controller;
 
+import com.alibaba.fastjson2.JSONObject;
 import com.example.bookstore.entity.User;
 import com.example.bookstore.service.UserService;
 import com.example.bookstore.util.Message;
 import com.example.bookstore.util.request.StatisticForm;
 import com.example.bookstore.util.request.UserPutForm;
-import net.sf.json.JSONObject;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;

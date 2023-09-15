@@ -2,11 +2,10 @@ package com.example.bookstore.dao.daoimpl;
 
 import com.example.bookstore.dao.OrderItemDao;
 import com.example.bookstore.entity.Book;
-import com.example.bookstore.entity.OrderItem;
 import com.example.bookstore.entity.Order;
+import com.example.bookstore.entity.OrderItem;
 import com.example.bookstore.entity.User;
 import com.example.bookstore.repository.OrderItemRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -29,11 +28,6 @@ public class OrderItemDaoImpl implements OrderItemDao {
     @Override
     public Set<OrderItem> findOrderItemInCart(User user, Book book) {
         return orderItemRepository.findAllByUserAndBook(user, book);
-    }
-
-    @Override
-    public Set<OrderItem> getOrderItemByOrder(Order order) {
-        return orderItemRepository.getOrderItemByOrder(order);
     }
 
     @Override

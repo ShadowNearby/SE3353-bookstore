@@ -20,7 +20,7 @@ public class BookController {
     public Book getBookById(@PathVariable("bookId") Long bookId) {
         return bookService.getBookById(bookId);
     }
-    
+
 
     @RequestMapping(value = "/api/books", method = RequestMethod.GET)
     public List<Book> getAllBooks() {
@@ -35,6 +35,6 @@ public class BookController {
 
     @RequestMapping(value = "/api/book/subinv", method = RequestMethod.POST)
     public Integer subInventory(@RequestParam("name") String name, @RequestParam("count") Integer count) {
-        return bookService.addInventory(name, count);
+        return bookService.subInventory(name, count);
     }
 }

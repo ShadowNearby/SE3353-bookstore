@@ -1,8 +1,8 @@
 package com.example.bookstore.controller;
 
+import com.alibaba.fastjson2.JSONObject;
 import com.example.bookstore.service.AssetsService;
 import jakarta.servlet.http.HttpServletResponse;
-import net.sf.json.JSONObject;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;

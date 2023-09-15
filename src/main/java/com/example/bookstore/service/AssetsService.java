@@ -1,6 +1,6 @@
 package com.example.bookstore.service;
 
-import net.sf.json.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;

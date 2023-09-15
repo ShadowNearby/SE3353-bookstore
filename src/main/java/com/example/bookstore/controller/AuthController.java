@@ -1,5 +1,6 @@
 package com.example.bookstore.controller;
 
+import com.alibaba.fastjson2.JSONObject;
 import com.example.bookstore.constant.Constant;
 import com.example.bookstore.entity.User;
 import com.example.bookstore.service.TickerService;
@@ -10,7 +11,6 @@ import com.example.bookstore.util.request.ForgetForm;
 import com.example.bookstore.util.request.LoginForm;
 import com.example.bookstore.util.request.RegisterForm;
 import jakarta.servlet.http.HttpServletResponse;
-import net.sf.json.JSONObject;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +28,7 @@ import java.util.Objects;
 public class AuthController {
     private final UserService userService;
     private final TickerService tickerService;
+
     public AuthController(UserService userService, TickerService tickerService) {
         this.userService = userService;
         this.tickerService = tickerService;

@@ -1,16 +1,12 @@
 package com.example.bookstore.interceptor;
 
 import com.example.bookstore.constant.Constant;
-import com.example.bookstore.util.Message;
 import com.example.bookstore.util.SessionUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import net.sf.json.JSONObject;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Objects;
 
 public class SessionValidateInterceptor implements HandlerInterceptor {
