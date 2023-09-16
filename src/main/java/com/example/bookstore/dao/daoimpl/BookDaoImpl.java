@@ -45,7 +45,7 @@ public class BookDaoImpl implements BookDao {
         var book_key = String.format("book-id-%d", book.getId());
         bookRepository.save(book);
         redisTemplate.delete(Stream.of(all_book_key, book_key).toList());
-        log.info("cache remove {},{}", all_book_key, book_key);
+        log.info("cache remove {}, {}", all_book_key, book_key);
     }
 
     @Override

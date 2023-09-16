@@ -126,7 +126,7 @@ public class UserDaoImpl implements UserDao {
             userAuthRepository.save(userAuth);
         }
         redisTemplate.delete(Stream.of(username_key, email_key, id_key, all_user_key).toList());
-        log.info("cache remove {},{},{},{}", username_key, email_key, id_key, all_user_key);
+        log.info("cache remove {}, {}, {}, {}", username_key, email_key, id_key, all_user_key);
     }
 
 
