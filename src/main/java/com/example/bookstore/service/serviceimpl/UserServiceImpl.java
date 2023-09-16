@@ -29,13 +29,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User handleLogin(String username, String password) {
-        Optional<User> user = userDao.findUserByUsername(username);
-        if (user.isEmpty())
+        UserAuth userAuth = userDao.getUserAuthByUsername(username);
+        if (userAuth == null)
             return null;
         String md5Password = DigestUtils.md5DigestAsHex(password.getBytes());
-        if (!Objects.equals(user.get().getUserAuth().getPassword(), md5Password))
+        if (!Objects.equals(userAuth.getPassword(), md5Password))
             return null;
-        return user.get();
+        return userDao.getUserByUsername(username);
     }
 
     @Override

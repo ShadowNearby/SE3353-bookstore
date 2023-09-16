@@ -17,6 +17,8 @@ public interface UserDao {
 
     User getUserById(Long id);
 
+    UserAuth getUserAuthByUsername(String username);
+
     void updateUser(User user, UserAuth userAuth);
 
     Set<User> getAllUsers();

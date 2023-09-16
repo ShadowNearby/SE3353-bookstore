@@ -114,6 +114,26 @@ public class UserDaoImpl implements UserDao {
         return result;
     }
 
+    @Override
+    public UserAuth getUserAuthByUsername(String username) {
+        var key = String.format("user-auth-username-%s", username);
+        var cache_result = redisTemplate.opsForValue().get(key);
+        if (cache_result != null) {
+            log.info("cache hit {}", key);
+            return JSON.parseObject(cache_result, UserAuth.class);
+        }
+        log.warn("cache miss {}", key);
+        var opt_user = findUserByUsername(username);
+        if (opt_user.isEmpty()) {
+            log.warn("user username {} is not present", username);
+            return null;
+        }
+        var result = userAuthRepository.getUserAuthByUser(opt_user.get());
+        redisTemplate.opsForValue().set(key, JSON.toJSONString(result));
+        log.info("cache set {}", key);
+        return result;
+    }
+
 
     @Override
     public void updateUser(User user, UserAuth userAuth) {
