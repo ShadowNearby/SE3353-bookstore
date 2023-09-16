@@ -1,8 +1,8 @@
 package com.example.bookstore.repository;
 
 import com.example.bookstore.entity.Book;
-import com.example.bookstore.entity.OrderItem;
 import com.example.bookstore.entity.Order;
+import com.example.bookstore.entity.OrderItem;
 import com.example.bookstore.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 

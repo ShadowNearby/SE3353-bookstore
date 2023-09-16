@@ -11,7 +11,7 @@ import java.util.Set;
 public interface OrderItemDao {
     List<OrderItem> getAllOrderItem();
 
-    Set<OrderItem> findOrderItemInCart(User user, Book book);
+    Set<OrderItem> getOrderItemInCart(User user, Book book);
 
     Set<OrderItem> getOrderItemByUser(User user);
 

@@ -131,8 +131,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public JSONObject statisticsPersonal(StatisticForm statisticForm) {
         Long userId = SessionUtil.getUserId();
-        Set<Order> orderSet = orderDao.getOrdersByUserId(userId);
-        List<Order> orderList = new ArrayList<>(orderSet);
+        var orderList = orderDao.getOrdersByUserId(userId);
+//        List<Order> orderList = new ArrayList<>(orderList);
         HashMap<String, Integer> nameCountMap = new HashMap<>();
         double spend = 0.0;
         for (Order order : orderList) {

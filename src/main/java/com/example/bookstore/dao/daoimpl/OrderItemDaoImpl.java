@@ -6,6 +6,9 @@ import com.example.bookstore.entity.Order;
 import com.example.bookstore.entity.OrderItem;
 import com.example.bookstore.entity.User;
 import com.example.bookstore.repository.OrderItemRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,9 +18,12 @@ import java.util.Set;
 public class OrderItemDaoImpl implements OrderItemDao {
 
     private final OrderItemRepository orderItemRepository;
+    private final StringRedisTemplate redisTemplate;
+    private final Logger log = LoggerFactory.getLogger(UserDaoImpl.class);
 
-    public OrderItemDaoImpl(OrderItemRepository orderItemRepository) {
+    public OrderItemDaoImpl(OrderItemRepository orderItemRepository, StringRedisTemplate redisTemplate) {
         this.orderItemRepository = orderItemRepository;
+        this.redisTemplate = redisTemplate;
     }
 
     @Override
@@ -26,7 +32,7 @@ public class OrderItemDaoImpl implements OrderItemDao {
     }
 
     @Override
-    public Set<OrderItem> findOrderItemInCart(User user, Book book) {
+    public Set<OrderItem> getOrderItemInCart(User user, Book book) {
         return orderItemRepository.findAllByUserAndBook(user, book);
     }
 

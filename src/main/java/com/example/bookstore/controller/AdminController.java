@@ -69,8 +69,8 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/admin/order/user/{userId}", method = RequestMethod.GET)
-    public Set<Order> getOrderByUserId(@PathVariable Long userId) {
-        return orderService.getOrderByUserId(userId);
+    public List<Order> getOrderByUserId(@PathVariable Long userId) {
+        return orderService.getOrdersByUserId(userId);
     }
 
     @RequestMapping(value = "/admin/orders", method = RequestMethod.GET)

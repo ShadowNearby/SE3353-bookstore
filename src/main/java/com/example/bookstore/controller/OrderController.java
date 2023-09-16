@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.io.IOException;
-import java.util.Set;
+import java.util.List;
 
 
 @RestController
@@ -49,13 +49,13 @@ public class OrderController {
     public void receiveAddOrder(@NotNull ConsumerRecord<String, AddOrderForm> consumerRecord) throws IOException {
         log.info("receive order from kafka {}", consumerRecord.value().toString());
         AddOrderForm addOrderForm = consumerRecord.value();
-        applicationContext.getBean(OrderService.class).addOrder(addOrderForm);
+        applicationContext.getBean(OrderService.class).updateOrder(addOrderForm);
         webSocketServer.sendMessageTo("订单处理成功", addOrderForm.getUserId());
     }
 
     @RequestMapping(value = "/api/order", method = RequestMethod.GET)
-    public Set<Order> getOrder() {
-        return applicationContext.getBean(OrderService.class).getOrderByUserId(SessionUtil.getUserId());
+    public List<Order> getOrder() {
+        return applicationContext.getBean(OrderService.class).getOrdersByUserId(SessionUtil.getUserId());
     }
 
 }

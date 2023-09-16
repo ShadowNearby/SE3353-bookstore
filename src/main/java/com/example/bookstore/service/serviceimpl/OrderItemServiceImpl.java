@@ -5,7 +5,6 @@ import com.example.bookstore.dao.OrderDao;
 import com.example.bookstore.dao.OrderItemDao;
 import com.example.bookstore.dao.UserDao;
 import com.example.bookstore.entity.Book;
-import com.example.bookstore.entity.Order;
 import com.example.bookstore.entity.OrderItem;
 import com.example.bookstore.entity.User;
 import com.example.bookstore.service.OrderItemService;
@@ -14,6 +13,7 @@ import com.example.bookstore.util.request.AddOrderItemForm;
 import com.example.bookstore.util.request.IdForm;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Service
@@ -43,8 +43,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public Set<OrderItem> getOrderItemInOrder() {
         Long userId = SessionUtil.getUserId();
-        User user = userDao.getUserById(userId);
-        Set<Order> orders = orderDao.getOrderByUser(user);
+        var orders = new HashSet<>(orderDao.getOrdersByUserId(userId));
         return orderItemDao.getOrderItemByOrders(orders);
     }
 
@@ -53,7 +52,7 @@ public class OrderItemServiceImpl implements OrderItemService {
         Long userId = SessionUtil.getUserId();
         User user = userDao.getUserById(userId);
         Book book = bookDao.getBookById(addOrderItemForm.getBookId());
-        Set<OrderItem> orderItems = orderItemDao.findOrderItemInCart(user, book);
+        Set<OrderItem> orderItems = orderItemDao.getOrderItemInCart(user, book);
         for (OrderItem orderItem : orderItems) {
             if (orderItem.getOrder() == null) {
                 orderItem.setCount(orderItem.getCount() + addOrderItemForm.getCount());

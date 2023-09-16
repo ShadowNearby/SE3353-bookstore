@@ -33,13 +33,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Set<Order> getOrderByUserId(Long userId) {
+    public List<Order> getOrdersByUserId(Long userId) {
         return orderDao.getOrdersByUserId(userId);
     }
 
     @Override
     @Transactional
-    public void addOrder(AddOrderForm addOrderForm) {
+    public void updateOrder(AddOrderForm addOrderForm) {
         Long userId = addOrderForm.getUserId();
         User user = userDao.getUserById(userId);
         Set<OrderItem> orderItemSet = orderItemDao.getOrderItemByIds(addOrderForm.getOrderItemIds());
@@ -60,7 +60,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Set<Order> getOrder() {
+    public List<Order> getOrders() {
         Long userId = SessionUtil.getUserId();
         return orderDao.getOrdersByUserId(userId);
     }
