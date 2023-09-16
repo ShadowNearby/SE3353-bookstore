@@ -57,11 +57,11 @@ public class OrderItemServiceImpl implements OrderItemService {
         for (OrderItem orderItem : orderItems) {
             if (orderItem.getOrder() == null) {
                 orderItem.setCount(orderItem.getCount() + addOrderItemForm.getCount());
-                orderItemDao.addOrderItem(orderItem);
+                orderItemDao.updateOrderItem(orderItem);
                 return orderItem.getId();
             }
         }
-        return orderItemDao.addOrderItem(new OrderItem(addOrderItemForm.getCount(), book, user)).getId();
+        return orderItemDao.updateOrderItem(new OrderItem(addOrderItemForm.getCount(), book, user)).getId();
     }
 
     @Override

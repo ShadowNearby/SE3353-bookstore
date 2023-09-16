@@ -47,7 +47,7 @@ public class OrderItemDaoImpl implements OrderItemDao {
     }
 
     @Override
-    public OrderItem addOrderItem(OrderItem orderItem) {
+    public OrderItem updateOrderItem(OrderItem orderItem) {
         return orderItemRepository.save(orderItem);
     }
 

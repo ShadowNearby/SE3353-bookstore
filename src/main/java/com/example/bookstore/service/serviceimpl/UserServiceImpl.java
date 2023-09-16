@@ -1,11 +1,13 @@
 package com.example.bookstore.service.serviceimpl;
 
 import com.alibaba.fastjson2.JSONObject;
+import com.example.bookstore.constant.Constant;
 import com.example.bookstore.dao.OrderDao;
 import com.example.bookstore.dao.UserDao;
 import com.example.bookstore.entity.Order;
 import com.example.bookstore.entity.OrderItem;
 import com.example.bookstore.entity.User;
+import com.example.bookstore.entity.UserAuth;
 import com.example.bookstore.service.UserService;
 import com.example.bookstore.util.SessionUtil;
 import com.example.bookstore.util.request.*;
@@ -47,7 +49,13 @@ public class UserServiceImpl implements UserService {
             return "该账户已存在";
         if (userDao.findUserByEmail(registerForm.getEmail()).isPresent())
             return "该邮箱已存在";
-        userDao.addUser(registerForm);
+        Date data = new Date();
+        String avatar = Constant.DEFAULT_AVATAR;
+        String password = DigestUtils.md5DigestAsHex(registerForm.getPassword().getBytes());
+        String userRole = Constant.USER;
+        User user = new User(registerForm.getUsername(), registerForm.getEmail(), userRole, data, avatar);
+        UserAuth userAuth = new UserAuth(password, user);
+        userDao.updateUser(user, userAuth);
         return "OK";
     }
 
@@ -59,8 +67,10 @@ public class UserServiceImpl implements UserService {
         if (!Objects.equals(user.get().getEmail(), forgetForm.getEmail()))
             return "账户对应邮箱不正确";
         String password = DigestUtils.md5DigestAsHex(forgetForm.getPassword().getBytes());
+        var user_auth = user.get().getUserAuth();
+        user_auth.setPassword(password);
         user.get().getUserAuth().setPassword(password);
-        userDao.updateUser(user.get());
+        userDao.updateUser(user.get(), user_auth);
         return "OK";
     }
 
@@ -82,7 +92,7 @@ public class UserServiceImpl implements UserService {
         user.setUsername(userPutForm.getUsername());
         user.setRegisterTime(userPutForm.getRegisterTime());
         user.setRole(userPutForm.getRole());
-        userDao.updateUser(user);
+        userDao.updateUser(user, null);
         return "OK";
     }
 

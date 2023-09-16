@@ -43,14 +43,14 @@ public class OrderServiceImpl implements OrderService {
         Long userId = addOrderForm.getUserId();
         User user = userDao.getUserById(userId);
         Set<OrderItem> orderItemSet = orderItemDao.getOrderItemByIds(addOrderForm.getOrderItemIds());
-        Order order = orderDao.addOrder(new Order(user, orderItemSet));
+        Order order = orderDao.updateOrder(new Order(user, orderItemSet));
         List<OrderItem> orderItemList = new ArrayList<>(orderItemSet);
         for (OrderItem orderItem : orderItemList) {
             orderItem.setOrder(order);
             Book book = orderItem.getBook();
             book.setInventory(book.getInventory() - orderItem.getCount());
-            bookDao.addBook(book);
-            orderItemDao.addOrderItem(orderItem);
+            bookDao.updateBook(book);
+            orderItemDao.updateOrderItem(orderItem);
         }
     }
 

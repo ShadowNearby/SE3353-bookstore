@@ -19,7 +19,7 @@ public interface OrderItemDao {
 
     Set<OrderItem> getOrderItemByIds(Set<Long> ids);
 
-    OrderItem addOrderItem(OrderItem goods);
+    OrderItem updateOrderItem(OrderItem goods);
 
     void removeById(Long id);
 }

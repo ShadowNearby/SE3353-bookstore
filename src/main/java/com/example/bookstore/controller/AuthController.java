@@ -86,7 +86,7 @@ public class AuthController {
     public JSONObject handleCheck() {
         String auth = SessionUtil.checkAuth();
         JSONObject object = new JSONObject();
-        if (Objects.equals(auth, Constant.NO_USER)) {
+        if (auth == null || Objects.equals(auth, Constant.NO_USER)) {
             object.put("auth", false);
             return object;
         }

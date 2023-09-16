@@ -3,8 +3,8 @@ package com.example.bookstore.service.serviceimpl;
 import com.example.bookstore.dao.BookDao;
 import com.example.bookstore.dao.OrderItemDao;
 import com.example.bookstore.entity.Book;
-import com.example.bookstore.entity.OrderItem;
 import com.example.bookstore.entity.Order;
+import com.example.bookstore.entity.OrderItem;
 import com.example.bookstore.service.BookService;
 import com.example.bookstore.util.request.BookStatisticsForm;
 import com.example.bookstore.util.request.StatisticForm;
@@ -34,19 +34,14 @@ public class BookServiceImpl implements BookService {
         return bookDao.getBookById(id);
     }
 
-    public Book getBookByName(String name) {
-        return bookDao.getBookByName(name);
-    }
-
-
     @Override
     public void addBook(String name, String image, String desc, String author, String isbn, Double price, Integer inventory) {
-        bookDao.addBook(new Book(name, image, desc, author, isbn, price, inventory));
+        bookDao.updateBook(new Book(name, image, desc, author, isbn, price, inventory));
     }
 
     @Override
     public void putBook(Long id, String name, String image, String desc, String author, String isbn, Double price, Integer inventory) {
-        bookDao.addBook(new Book(id, name, image, desc, author, isbn, price, inventory));
+        bookDao.updateBook(new Book(id, name, image, desc, author, isbn, price, inventory));
     }
 
     @Override
