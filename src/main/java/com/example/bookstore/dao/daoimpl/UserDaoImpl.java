@@ -40,7 +40,7 @@ public class UserDaoImpl implements UserDao {
             if (result.isEmpty()) {
                 return Optional.empty();
             }
-            return (Optional<User>) result.get();
+            return Optional.ofNullable(getUserByUsername(username));
         }
         log.warn("cache miss {}", key);
         var result = userRepository.findUserByUsername(username);
@@ -60,7 +60,7 @@ public class UserDaoImpl implements UserDao {
             if (result.isEmpty()) {
                 return Optional.empty();
             }
-            return (Optional<User>) result.get();
+            return Optional.ofNullable(getUserByEmail(email));
         }
         log.warn("cache miss {}", key);
         var result = userRepository.findUserByEmail(email);
