@@ -40,7 +40,7 @@ public class UserDaoImpl implements UserDao {
             if (result.isEmpty()) {
                 return Optional.empty();
             }
-            return Optional.ofNullable(getUserByUsername(username));
+            return (Optional<User>) result.get();
         }
         log.warn("cache miss {}", key);
         var result = userRepository.findUserByUsername(username);
@@ -60,7 +60,7 @@ public class UserDaoImpl implements UserDao {
             if (result.isEmpty()) {
                 return Optional.empty();
             }
-            return Optional.ofNullable(getUserByEmail(email));
+            return (Optional<User>) result.get();
         }
         log.warn("cache miss {}", key);
         var result = userRepository.findUserByEmail(email);
@@ -118,15 +118,17 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void updateUser(User user, UserAuth userAuth) {
         var username_key = String.format("user-username-%s", user.getUsername());
+        var opt_username_key = String.format("optional_user-username-%s", user.getUsername());
         var email_key = String.format("user-email-%s", user.getEmail());
+        var opt_email_key = String.format("optional_user-email-%s", user.getEmail());
         var id_key = String.format("user-id-%d", user.getId());
         var all_user_key = CacheKeyConstant.ALL_USER;
         userRepository.save(user);
         if (userAuth != null) {
             userAuthRepository.save(userAuth);
         }
-        redisTemplate.delete(Stream.of(username_key, email_key, id_key, all_user_key).toList());
-        log.info("cache remove {}, {}, {}, {}", username_key, email_key, id_key, all_user_key);
+        redisTemplate.delete(Stream.of(username_key, email_key, id_key, opt_username_key, opt_email_key, all_user_key).toList());
+        log.info("cache remove {}, {}, {}, {}, {}, {}", username_key, email_key, id_key, opt_username_key, opt_email_key, all_user_key);
     }
 
 
