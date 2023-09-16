@@ -47,6 +47,7 @@ public class OrderServiceImpl implements OrderService {
         List<OrderItem> orderItemList = new ArrayList<>(orderItemSet);
         for (OrderItem orderItem : orderItemList) {
             orderItem.setOrder(order);
+            orderItem.setOrderTime(order.getOrderTime());
             Book book = orderItem.getBook();
             book.setInventory(book.getInventory() - orderItem.getCount());
             bookDao.updateBook(book);

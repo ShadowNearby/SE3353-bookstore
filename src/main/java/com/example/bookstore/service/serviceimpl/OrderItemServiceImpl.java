@@ -54,7 +54,7 @@ public class OrderItemServiceImpl implements OrderItemService {
         Book book = bookDao.getBookById(addOrderItemForm.getBookId());
         Set<OrderItem> orderItems = orderItemDao.getOrderItemInCart(user, book);
         for (OrderItem orderItem : orderItems) {
-            if (orderItem.getOrder() == null) {
+            if (orderItem.getOrderTime() == null) {
                 orderItem.setCount(orderItem.getCount() + addOrderItemForm.getCount());
                 orderItemDao.updateOrderItem(orderItem);
                 return orderItem.getId();

@@ -1,6 +1,5 @@
 package com.example.bookstore.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -19,12 +18,12 @@ public class Order {
     private Long id;
     @Column(name = "ordertime", nullable = false)
     private Date orderTime;
-    @JsonIgnore
+    @JsonIgnoreProperties(value = {"orderItems", "userAuth"})
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
     @JsonIgnoreProperties(value = {"order"})
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "order", cascade = CascadeType.ALL)
     private Set<OrderItem> orderItemList;
 
     public Order() {

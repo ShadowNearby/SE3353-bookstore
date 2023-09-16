@@ -132,7 +132,6 @@ public class UserServiceImpl implements UserService {
     public JSONObject statisticsPersonal(StatisticForm statisticForm) {
         Long userId = SessionUtil.getUserId();
         var orderList = orderDao.getOrdersByUserId(userId);
-//        List<Order> orderList = new ArrayList<>(orderList);
         HashMap<String, Integer> nameCountMap = new HashMap<>();
         double spend = 0.0;
         for (Order order : orderList) {

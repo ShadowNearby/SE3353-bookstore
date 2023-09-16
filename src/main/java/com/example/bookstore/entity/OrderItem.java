@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @Entity
@@ -15,6 +17,8 @@ public class OrderItem {
     private Long id;
     @Column(name = "count", length = 16, nullable = false)
     private Integer count;
+    @Column(name = "ordertime")
+    private Date orderTime;
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "book_id", referencedColumnName = "id", nullable = false)
     private Book book;
@@ -27,12 +31,6 @@ public class OrderItem {
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Order order;
 
-    public OrderItem(Integer count, Book book, User user, Order order) {
-        this.count = count;
-        this.book = book;
-        this.user = user;
-        this.order = order;
-    }
 
     public OrderItem(Integer count, Book book, User user) {
         this.count = count;
