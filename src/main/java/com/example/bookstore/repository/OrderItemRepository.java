@@ -19,7 +19,7 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
 
     Set<OrderItem> getAllByIdIn(Set<Long> ids);
 
-    Set<OrderItem> findAllByUserAndBook(User user, Book book);
+    Set<OrderItem> getAllByUserAndBook(User user, Book book);
 
     void deleteOrderItemById(Long id);
 }

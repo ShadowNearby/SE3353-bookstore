@@ -12,26 +12,27 @@ import com.example.bookstore.util.request.LoginForm;
 import com.example.bookstore.util.request.RegisterForm;
 import jakarta.servlet.http.HttpServletResponse;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Objects;
 
 @RestController
 @Transactional
-@Scope("session")
+//@Scope("session")
 public class AuthController {
     private final UserService userService;
-    private final TickerService tickerService;
+    //    private final TickerService tickerService;
+    private final WebApplicationContext webApplicationContext;
 
-    public AuthController(UserService userService, TickerService tickerService) {
+    public AuthController(UserService userService, WebApplicationContext webApplicationContext) {
         this.userService = userService;
-        this.tickerService = tickerService;
+        this.webApplicationContext = webApplicationContext;
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -56,7 +57,7 @@ public class AuthController {
         message.put(Constant.USER_AVATAR, auth.getAvatar());
         message.put(Constant.MESSAGE, Constant.LOGIN_SUCCESS);
         message.put(Constant.STATE, 200);
-        tickerService.Begin();
+        webApplicationContext.getBean(TickerService.class).Begin();
         return message;
     }
 
@@ -79,7 +80,7 @@ public class AuthController {
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public ResponseEntity<Message> handleLogout() {
         SessionUtil.removeSession();
-        return ResponseEntity.status(200).body(new Message(String.format("%s秒", tickerService.End().toString())));
+        return ResponseEntity.status(200).body(new Message(String.format("%s秒", webApplicationContext.getBean(TickerService.class).End())));
     }
 
     @RequestMapping(value = "/check", method = RequestMethod.POST)

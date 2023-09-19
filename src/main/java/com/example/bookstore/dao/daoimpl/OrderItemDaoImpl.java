@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -45,12 +46,32 @@ public class OrderItemDaoImpl implements OrderItemDao {
 
     @Override
     public Set<OrderItem> getOrderItemInCart(User user, Book book) {
-        return orderItemRepository.findAllByUserAndBook(user, book);
+        var key = String.format("order-item-cart-user-id-%d-book-id-%d", user.getId(), book.getId());
+        var cache_result = redisTemplate.opsForValue().get(key);
+        if (cache_result != null) {
+            log.info("cache hit {}", key);
+            return new HashSet<>(JSON.parseArray(cache_result, OrderItem.class));
+        }
+        log.warn("cache miss {}", key);
+        var result = orderItemRepository.getAllByUserAndBook(user, book);
+        redisTemplate.opsForValue().set(key, JSON.toJSONString(result));
+        log.info("cache set {}", key);
+        return result;
     }
 
     @Override
     public Set<OrderItem> getOrderItemByUser(User user) {
-        return orderItemRepository.getAllByUser(user);
+        var key = String.format("order-item-cart-user-id-%d", user.getId());
+        var cache_result = redisTemplate.opsForValue().get(key);
+        if (cache_result != null) {
+            log.info("cache hit {}", key);
+            return new HashSet<>(JSON.parseArray(cache_result, OrderItem.class));
+        }
+        log.warn("cache miss {}", key);
+        var result = orderItemRepository.getAllByUser(user);
+        redisTemplate.opsForValue().set(key, JSON.toJSONString(result));
+        log.info("cache set {}", key);
+        return result;
     }
 
 
