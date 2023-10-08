@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/frontend/frontend.iml" filepath="$PROJECT_DIR$/frontend/frontend.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mainservice.main.iml" filepath="$PROJECT_DIR$/.idea/modules/mainservice.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/microservice.main.iml" filepath="$PROJECT_DIR$/.idea/modules/microservice.main.iml" />
     </modules>
   </component>
 </project>
