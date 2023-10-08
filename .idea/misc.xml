@@ -2,6 +2,7 @@
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/ebook" />
+    <file type="web" url="file://$PROJECT_DIR$/mainservice" />
     <file type="web" url="file://$PROJECT_DIR$/microservice" />
   </component>
   <component name="MavenProjectsManager">

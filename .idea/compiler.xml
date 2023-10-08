@@ -8,11 +8,16 @@
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.20/18bcea7d5df4d49227b4a0743a536208ce4825bb/lombok-1.18.20.jar" />
         </processorPath>
-        <module name="ebook.main" />
+        <module name="mainservice.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="bookstore" target="17" />
+      <module name="com.mainservice.main" target="17" />
+      <module name="com.mainservice.test" target="17" />
+      <module name="ebook" target="17" />
+      <module name="ebook.main" target="17" />
+      <module name="ebook.test" target="17" />
       <module name="microSerivce" target="17" />
     </bytecodeTargetLevel>
   </component>
