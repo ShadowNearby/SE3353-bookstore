@@ -3,16 +3,20 @@ interface IRequest {
   body: any;
 }
 
-export const requestUrl = "http://localhost:8080/";
+interface IGetRequest {
+  url: string;
+}
 
-export const getRequest = async ({ url, body }: IRequest) =>
+export const requestUrl = "http://localhost:8080/";
+export const microServiceUrl = "http://localhost:8090/microservice/";
+
+export const getRequest = async ({ url }: IGetRequest) =>
   await fetch(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
     credentials: "include",
-    body: JSON.stringify(body),
   });
 
 export const deleteRequest = async ({ url, body }: IRequest) =>

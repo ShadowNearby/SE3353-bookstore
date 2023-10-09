@@ -1,6 +1,7 @@
 package com.microservice.controller
 
 import com.microservice.service.BookService
+import com.microservice.vo.BookAuthorVo
 import jakarta.servlet.http.HttpServletResponse
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -16,7 +17,7 @@ class BookController(
     private val log: Logger by lazy { LoggerFactory.getLogger(this.javaClass) }
 
     @RequestMapping(value = ["/book"], method = [RequestMethod.GET])
-    fun getAuthorByName(@RequestParam("name") name: String, response: HttpServletResponse): String? {
-        return bookService.getAuthorByName(name)
+    fun getAuthorByName(@RequestParam("name") name: String, response: HttpServletResponse): BookAuthorVo {
+        return BookAuthorVo(Author = bookService.getAuthorByName(name))
     }
 }
