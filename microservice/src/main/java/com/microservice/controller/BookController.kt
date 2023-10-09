@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 class BookController(
     private val bookService: BookService,
 ) {
-    private val log: Logger = LoggerFactory.getLogger(this.javaClass)
+    private val log: Logger by lazy { LoggerFactory.getLogger(this.javaClass) }
 
     @RequestMapping(value = ["/book"], method = [RequestMethod.GET])
     fun getAuthorByName(@RequestParam("name") name: String, response: HttpServletResponse): String? {
