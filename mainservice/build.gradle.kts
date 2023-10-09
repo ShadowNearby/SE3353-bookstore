@@ -27,6 +27,7 @@ dependencies {
     implementation("com.alibaba.fastjson2:fastjson2:2.0.40")
     implementation("org.jetbrains:annotations:24.0.1")
     implementation("org.springframework.boot:spring-boot-starter-websocket")
+    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
 
     // https://projectlombok.org
     compileOnly("org.projectlombok:lombok:1.18.20")
@@ -34,7 +35,11 @@ dependencies {
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
-
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:2022.0.4")
+    }
+}
 tasks.withType<Test> {
     useJUnitPlatform()
 }

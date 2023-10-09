@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8090
   error:
     include-message: always
 spring:
@@ -12,6 +12,8 @@ spring:
             allowedMethods:
               - GET
               - POST
+              - PUT
+              - DELETE
   application:
     name: gateway
 eureka:
