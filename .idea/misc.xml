@@ -1,7 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/ebook" />
+    <file type="web" url="file://$PROJECT_DIR$/eureka" />
+    <file type="web" url="file://$PROJECT_DIR$/gateway" />
     <file type="web" url="file://$PROJECT_DIR$/mainservice" />
     <file type="web" url="file://$PROJECT_DIR$/microservice" />
   </component>
