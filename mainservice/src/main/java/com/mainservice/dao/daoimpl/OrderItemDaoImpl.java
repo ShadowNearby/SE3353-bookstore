@@ -1,13 +1,11 @@
 package com.mainservice.dao.daoimpl;
 
-import com.alibaba.fastjson2.JSON;
 import com.mainservice.dao.OrderItemDao;
 import com.mainservice.entity.Book;
 import com.mainservice.entity.Order;
 import com.mainservice.entity.OrderItem;
 import com.mainservice.entity.User;
 import com.mainservice.repository.OrderItemRepository;
-import com.mainservice.util.CacheKeyConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -32,47 +30,47 @@ public class OrderItemDaoImpl implements OrderItemDao {
 
     @Override
     public List<OrderItem> getAllOrderItem() {
-        var key = CacheKeyConstant.ALL_ORDER_ITEM;
-        var cache_result = redisTemplate.opsForValue().get(key);
-        if (cache_result != null) {
-            log.info("cache hit {}", key);
-            return JSON.parseArray(cache_result, OrderItem.class);
-        }
-        log.warn("cache miss {}", key);
+//        var key = CacheKeyConstant.ALL_ORDER_ITEM;
+//        var cache_result = redisTemplate.opsForValue().get(key);
+//        if (cache_result != null) {
+//            log.info("cache hit {}", key);
+//            return JSON.parseArray(cache_result, OrderItem.class);
+//        }
+//        log.warn("cache miss {}", key);
         var result = orderItemRepository.findAll();
-        redisTemplate.opsForValue().set(key, JSON.toJSONString(result));
-        log.info("cache set {}", key);
+//        redisTemplate.opsForValue().set(key, JSON.toJSONString(result));
+//        log.info("cache set {}", key);
         return result;
     }
 
     @Override
     public Set<OrderItem> getOrderItemInCart(User user, Book book) {
-        var key = String.format("order-item-cart-user-id-%d-book-id-%d", user.getId(), book.getId());
+//        var key = String.format("order-item-cart-user-id-%d-book-id-%d", user.getId(), book.getId());
 //        var cache_result = redisTemplate.opsForValue().get(key);
 //        if (cache_result != null) {
 //            log.info("cache hit {}", ke】
 //            、y);
 //            return new HashSet<>(JSON.parseArray(cache_result, OrderItem.class));
 //        }
-        log.warn("cache miss {}", key);
+//        log.warn("cache miss {}", key);
         var result = orderItemRepository.getAllByUserAndBook(user, book);
-        redisTemplate.opsForValue().set(key, JSON.toJSONString(result));
-        log.info("cache set {}", key);
+//        redisTemplate.opsForValue().set(key, JSON.toJSONString(result));
+//        log.info("cache set {}", key);
         return result;
     }
 
     @Override
     public Set<OrderItem> getOrderItemByUser(User user) {
-        var key = String.format("order-item-cart-user-id-%d", user.getId());
+//        var key = String.format("order-item-cart-user-id-%d", user.getId());
 //        var cache_result = redisTemplate.opsForValue().get(key);
 //        if (cache_result != null) {
 //            log.info("cache hit {}", key);
 //            return new HashSet<>(JSON.parseArray(cache_result, OrderItem.class));
 //        }
-        log.warn("cache miss {}", key);
+//        log.warn("cache miss {}", key);
         var result = orderItemRepository.getAllByUser(user);
-        redisTemplate.opsForValue().set(key, JSON.toJSONString(result));
-        log.info("cache set {}", key);
+//        redisTemplate.opsForValue().set(key, JSON.toJSONString(result));
+//        log.info("cache set {}", key);
         return result;
     }
 
