@@ -97,7 +97,7 @@ export const RegisterView = () => {
               }
               handleRegister(username, password, email).then(
                 (res: IMessage) => {
-                  if (res.message !== "OK") {
+                  if (res.message !== "注册成功") {
                     messageApi
                       .error(<Alert message={res.message} type={"error"} />, 2)
                       .then();
@@ -108,7 +108,7 @@ export const RegisterView = () => {
                         1
                       )
                       .then(() => {
-                        localStorage.setItem("username", username);
+                        // localStorage.setItem("username", username);
                         navigate("/");
                       });
                   }

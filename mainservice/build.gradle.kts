@@ -28,6 +28,8 @@ dependencies {
     implementation("org.jetbrains:annotations:24.0.1")
     implementation("org.springframework.boot:spring-boot-starter-websocket")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
+    implementation("org.springframework.boot:spring-boot-starter-data-neo4j")
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
 
     // https://projectlombok.org
     compileOnly("org.projectlombok:lombok:1.18.20")

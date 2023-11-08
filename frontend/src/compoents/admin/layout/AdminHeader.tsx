@@ -1,4 +1,4 @@
-import { Layout, Menu } from "antd";
+import { Layout, Menu, message } from "antd";
 import {
   BookOutlined,
   CloseCircleOutlined,
@@ -45,7 +45,13 @@ export const AdminHeader = () => {
         <Menu.Item key={"5"} icon={<StarOutlined />} onClick={() => {}}>
           <Link to={"/"}>{"网站主页"}</Link>
         </Menu.Item>
-        <Menu.Item icon={<CloseCircleOutlined />} onClick={() => logout()}>
+        <Menu.Item
+          icon={<CloseCircleOutlined />}
+          onClick={async () => {
+            const msg = await logout();
+            message.info(`登陆时间${msg.message}`);
+          }}
+        >
           <Link to={"/login"}>{"登出"}</Link>
         </Menu.Item>
       </Menu>

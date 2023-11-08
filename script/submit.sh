@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 find ../ -name "*.zip" -exec rm -r {} +
-zip -r -q "../src-$(date +%Y-%m-%d).zip" ../frontend/* ../src ../pom.xml ../demo.imi ../mvnw ../bookstore.imi -x '../frontend/node_modules/*'
+zip -r -q "../src-$(date +%Y-%m-%d).zip" ../frontend/* ../mainservice/src ../mainservice/build.gradle.kts ../mainservice/settings.gradle.kts ../microservice/src  ../microservice/build.gradle ../microservice/settings.gradle ../eureka/src/ ../eureka/build.gradle.kts ../eureka/settings.gradle.kts ../gateway/src ../gateway/settings.gradle.kts ../gateway/build.gradle.kts -x '../frontend/node_modules/*'

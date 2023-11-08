@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Objects;
 
-@RestController
 @Transactional
+@RestController
 public class AuthController {
     private final UserService userService;
     private final TickerService tickerService;
@@ -55,6 +55,7 @@ public class AuthController {
         message.put(Constant.USER_AVATAR, auth.getAvatar());
         message.put(Constant.MESSAGE, Constant.LOGIN_SUCCESS);
         message.put(Constant.STATE, 200);
+//        var tickerService = context.getBean(TickerService.class);
         tickerService.Begin();
         return message;
     }
@@ -77,8 +78,10 @@ public class AuthController {
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public ResponseEntity<Message> handleLogout() {
+//        var tickerService = context.getBean(TickerService.class);
+        var message = new Message(String.format("%s秒", tickerService.End()));
         SessionUtil.removeSession();
-        return ResponseEntity.status(200).body(new Message(String.format("%s秒", tickerService.End())));
+        return ResponseEntity.status(200).body(message);
     }
 
     @RequestMapping(value = "/check", method = RequestMethod.POST)
