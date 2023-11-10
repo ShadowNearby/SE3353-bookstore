@@ -3,7 +3,9 @@ package com.mainservice.dao.daoimpl;
 import com.mainservice.dao.ImageDao;
 import com.mainservice.entity.Image;
 import com.mainservice.repository.ImageRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class ImageDaoImpl implements ImageDao {
     private final ImageRepository imageRepository;
 

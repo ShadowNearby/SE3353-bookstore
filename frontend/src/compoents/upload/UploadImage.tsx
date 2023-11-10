@@ -12,15 +12,16 @@ interface Props {
 export const UploadImage = ({ state, setState }: Props) => {
   const [uploading, setUploading] = useState(false);
   const beforeUpload = (file: RcFile) => {
-    const isJpgOrPng = file.type === "image/png";
-    if (!isJpgOrPng) {
-      message.error("You can only upload PNG file!", 1).then();
-    }
+    // const isJpgOrPng = file.type === "image/png";
+    // if (!isJpgOrPng) {
+    //   message.error("You can only upload PNG file!", 1).then();
+    // }
     const isLt2M = file.size / 1024 / 1024 < 2;
     if (!isLt2M) {
       message.error("Image must smaller than 2MB!", 1).then();
     }
-    return isJpgOrPng && isLt2M;
+    return isLt2M;
+    // return isJpgOrPng && isLt2M;
   };
   const handleUploadAction = async (file: RcFile) => {
     setUploading(true);

@@ -4,17 +4,11 @@ import { DatePicker, Select, Space, Tabs } from "antd";
 import { backgroundColor, boarderColor } from "../../utility/color";
 import dayjs from "dayjs";
 import { MonthOfMs, WeekOfMs, YearOfMs } from "../../utility/timeConst";
-import { getStatisticsPersonal } from "../../service/get/personal/getStatistics";
-
-interface IBookForm {
-  bookName: string;
-  count: number;
-}
-
-interface IResponse {
-  books: IBookForm[];
-  spend: number;
-}
+import {
+  getStatisticsPersonal,
+  IBookForm,
+  IResponse,
+} from "../../service/get/personal/getStatistics";
 
 interface ITabItem {
   key: string;
