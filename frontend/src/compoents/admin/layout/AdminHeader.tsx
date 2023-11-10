@@ -49,7 +49,7 @@ export const AdminHeader = () => {
           icon={<CloseCircleOutlined />}
           onClick={async () => {
             const msg = await logout();
-            message.info(`登陆时间${msg.message}`);
+            message.info(`登录时间${msg.message}`);
           }}
         >
           <Link to={"/login"}>{"登出"}</Link>

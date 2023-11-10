@@ -27,7 +27,7 @@ export const HeadBar = () => {
           to={"/login"}
           onClick={async () => {
             const msg = await logout();
-            message.info(msg.message, 5);
+            message.info(`登录时间${msg.message}`);
           }}
         >
           {`登出`}
