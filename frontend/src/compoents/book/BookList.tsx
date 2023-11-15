@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Input, List, Spin } from "antd";
 import { Book } from "./Book";
 import { IBook } from "../../interface";
-import { getBooks } from "../../service/get/getBook";
+import { getBooks, getBooksByType } from "../../service/get/getBook";
 
 export const BookList = (): JSX.Element => {
   const [books, setBooks] = useState<IBook[]>([]);
@@ -28,6 +28,16 @@ export const BookList = (): JSX.Element => {
     });
     setShowedBooks(newList);
   };
+  const searchByType = async (target: string) => {
+    if (target === "") {
+      const books = await getBooks();
+      setBooks(books);
+      return;
+    }
+    const books = await getBooksByType(target);
+    setBooks(books);
+    setShowedBooks(books);
+  };
   return (
     <div>
       <Input.Search
@@ -35,6 +45,10 @@ export const BookList = (): JSX.Element => {
         onSearch={(target) => {
           searchByName(target);
         }}
+      ></Input.Search>
+      <Input.Search
+        placeholder={`按类型搜索`}
+        onSearch={(target) => searchByType(target)}
       ></Input.Search>
       <span style={{ marginTop: 10 }}>
         {showedBooks ? (

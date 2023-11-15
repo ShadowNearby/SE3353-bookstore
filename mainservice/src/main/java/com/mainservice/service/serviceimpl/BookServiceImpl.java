@@ -1,12 +1,15 @@
 package com.mainservice.service.serviceimpl;
 
 import com.mainservice.dao.BookDao;
+import com.mainservice.dao.BookTypeDao;
 import com.mainservice.dao.OrderItemDao;
 import com.mainservice.entity.Book;
 import com.mainservice.entity.OrderItem;
 import com.mainservice.service.BookService;
 import com.mainservice.util.request.BookStatisticsForm;
 import com.mainservice.util.request.StatisticForm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,10 +20,14 @@ import java.util.List;
 @Service
 public class BookServiceImpl implements BookService {
     private final BookDao bookDao;
+    private final BookTypeDao bookTypeDao;
     private final OrderItemDao orderItemDao;
 
-    public BookServiceImpl(BookDao bookDao, OrderItemDao orderItemDao) {
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
+    public BookServiceImpl(BookDao bookDao, BookTypeDao bookTypeDao, OrderItemDao orderItemDao) {
         this.bookDao = bookDao;
+        this.bookTypeDao = bookTypeDao;
         this.orderItemDao = orderItemDao;
     }
 
@@ -32,6 +39,17 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book getBookById(Long id) {
         return bookDao.getBookById(id);
+    }
+
+    @Override
+    public Book getBookByName(String name) {
+        return bookDao.getBookByName(name);
+    }
+
+    @Override
+    public List<Book> getBookByTypeName(String name) {
+        bookTypeDao.init();
+        return bookTypeDao.findBooksByTypeRelation(name);
     }
 
     @Override

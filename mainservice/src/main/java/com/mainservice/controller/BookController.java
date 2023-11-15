@@ -2,6 +2,8 @@ package com.mainservice.controller;
 
 import com.mainservice.entity.Book;
 import com.mainservice.service.BookService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +14,8 @@ import java.util.List;
 public class BookController {
     private final BookService bookService;
 
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
     public BookController(BookService bookService) {
         this.bookService = bookService;
     }
@@ -19,6 +23,12 @@ public class BookController {
     @RequestMapping(value = "/api/book/{bookId}", method = RequestMethod.GET)
     public Book getBookById(@PathVariable("bookId") Long bookId) {
         return bookService.getBookById(bookId);
+    }
+
+    @RequestMapping(value = "/api/book", method = RequestMethod.GET)
+    public List<Book> getBooksByTypeName(@RequestParam(value = "type") String typeName) {
+        log.info("type {}", typeName);
+        return bookService.getBookByTypeName(typeName);
     }
 
 

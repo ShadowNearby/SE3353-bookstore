@@ -104,7 +104,7 @@ public class BookDaoImpl implements BookDao {
         } catch (Exception ignored) {
             log.error("redis error");
         }
-        var book = bookRepository.findByName(name);
+        var book = bookRepository.findByNameContains(name);
         if (book.isPresent()) {
             try {
                 redisTemplate.opsForValue().set(key, JSON.toJSONString(book.get()));

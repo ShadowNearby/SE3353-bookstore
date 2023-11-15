@@ -16,3 +16,11 @@ export async function getBookById(id: number): Promise<IBook> {
     .then((res) => res.json())
     .catch((err) => console.log(err));
 }
+
+export async function getBooksByType(name: string): Promise<IBook[]> {
+  const response = await fetch(`http://localhost:8080/api/book?type=${name}`, {
+    method: "GET",
+    credentials: "include",
+  });
+  return response.json();
+}
