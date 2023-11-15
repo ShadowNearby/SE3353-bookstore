@@ -29,41 +29,62 @@ public class BookDaoImpl implements BookDao {
     @Override
     public List<Book> getBooks() {
         var key = CacheKeyConstant.ALL_BOOK;
-        var cache_result = redisTemplate.opsForValue().get(key);
-        if (cache_result != null) {
-            log.info("cache hit {}", key);
-            return JSON.parseArray(cache_result, Book.class);
+        try {
+            var cache_result = redisTemplate.opsForValue().get(key);
+            if (cache_result != null) {
+                log.info("cache hit {}", key);
+                return JSON.parseArray(cache_result, Book.class);
+            }
+        } catch (Exception ignored) {
+            log.error("redis error");
         }
         log.warn("cache miss {}", key);
         var all_books = bookRepository.findBooksByDeletedNot(true);
-        redisTemplate.opsForValue().set(key, JSON.toJSONString(all_books));
-        log.info("cache set {}", key);
+        try {
+            redisTemplate.opsForValue().set(key, JSON.toJSONString(all_books));
+            log.info("cache set {}", key);
+        } catch (Exception ignored) {
+            log.error("redis error");
+        }
         return all_books;
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public void updateBook(Book book) {
-        var all_book_key = CacheKeyConstant.ALL_BOOK;
-        var book_key = String.format("book-id-%d", book.getId());
         bookRepository.save(book);
-        redisTemplate.delete(Stream.of(all_book_key, book_key).toList());
-        log.info("cache remove {}, {}", all_book_key, book_key);
+        try {
+            var all_book_key = CacheKeyConstant.ALL_BOOK;
+            var book_key = String.format("book-id-%d", book.getId());
+            redisTemplate.delete(Stream.of(all_book_key, book_key).toList());
+            log.info("cache remove {}, {}", all_book_key, book_key);
+        } catch (Exception ignore) {
+            log.error("redis error");
+        }
+
     }
 
     @Override
     public Book getBookById(Long id) {
         var key = String.format("book-id-%d", id);
-        var cache_result = redisTemplate.opsForValue().get(key);
-        if (cache_result != null) {
-            log.info("cache hit {}", key);
-            return JSON.parseObject(cache_result, Book.class);
+        try {
+            var cache_result = redisTemplate.opsForValue().get(key);
+            if (cache_result != null) {
+                log.info("cache hit {}", key);
+                return JSON.parseObject(cache_result, Book.class);
+            }
+            log.warn("cache miss {}", key);
+        } catch (Exception ignored) {
+            log.error("redis error");
         }
-        log.warn("cache miss {}", key);
         var book = bookRepository.findById(id);
         if (book.isPresent()) {
-            redisTemplate.opsForValue().set(key, JSON.toJSONString(book.get()));
-            log.info("cache set {}", key);
+            try {
+                redisTemplate.opsForValue().set(key, JSON.toJSONString(book.get()));
+                log.info("cache set {}", key);
+            } catch (Exception ignored) {
+                log.error("redis error");
+            }
             return book.get();
         }
         log.error("book id {} is not present", id);
@@ -73,16 +94,24 @@ public class BookDaoImpl implements BookDao {
     @Override
     public Book getBookByName(String name) {
         var key = String.format("book-name-%s", name);
-        var cache_result = redisTemplate.opsForValue().get(key);
-        if (cache_result != null) {
-            log.info("cache hit {}", key);
-            return JSON.parseObject(cache_result, Book.class);
+        try {
+            var cache_result = redisTemplate.opsForValue().get(key);
+            if (cache_result != null) {
+                log.info("cache hit {}", key);
+                return JSON.parseObject(cache_result, Book.class);
+            }
+            log.warn("cache miss {}", key);
+        } catch (Exception ignored) {
+            log.error("redis error");
         }
-        log.warn("cache miss {}", key);
         var book = bookRepository.findByName(name);
         if (book.isPresent()) {
-            redisTemplate.opsForValue().set(key, JSON.toJSONString(book.get()));
-            log.info("cache set {}", key);
+            try {
+                redisTemplate.opsForValue().set(key, JSON.toJSONString(book.get()));
+                log.info("cache set {}", key);
+            } catch (Exception ignored) {
+                log.error("redis error");
+            }
             return book.get();
         }
         log.error("book name {} is not present", name);
@@ -91,6 +120,7 @@ public class BookDaoImpl implements BookDao {
 
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public Integer addInventory(String name, Integer count) {
         Book book = getBookByName(name);
         book.setInventory(book.getInventory() + count);
@@ -99,6 +129,7 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public Integer subInventory(String name, Integer count) {
         Book book = getBookByName(name);
         Integer inv = book.getInventory();
@@ -110,6 +141,7 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public void deleteBook(Book book) {
         book.setDeleted(true);
         updateBook(book);
