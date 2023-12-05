@@ -1,9 +1,14 @@
 type Query {
-    getBookByBookName(id: ID): Book
+    bookByName(name: String): [Book]
 }
 
 type Book {
     id: ID
     name: String
+    image: String
+    description: String
     author: String
+    price: Float
+    inventory: Int
+    isbn: String
 }

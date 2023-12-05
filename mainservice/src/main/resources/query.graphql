@@ -1,7 +1,13 @@
 query bookDetails {
-    getBookByBookName(id: "book-1") {
-        id,
-        name,
+    bookByName(name: "book1") {
+        id
+        name
         author
+        image
+        price
+        author
+        description
+        inventory
+        isbn
     }
 }
