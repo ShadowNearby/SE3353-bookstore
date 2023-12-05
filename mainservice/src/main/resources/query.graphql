@@ -1,5 +1,5 @@
-query bookDetails {
-    bookByName(name: "book1") {
+query bookDetails($name:String) {
+    bookByName(name: $name) {
         id
         name
         author

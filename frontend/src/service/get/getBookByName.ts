@@ -11,8 +11,8 @@ import {IBook} from "../../interface"; // export async function getBookByName(na
 export async function getBookByName(name: string): Promise<IBook[]> {
   const url = `${requestUrl}graphql`;
   const body = {
-    query: `query bookDetails {
-    bookByName(name: "${name}") {
+    query: `query bookDetails($name:String) {
+    bookByName(name: $name) {
         id
         name
         author
@@ -24,7 +24,7 @@ export async function getBookByName(name: string): Promise<IBook[]> {
         isbn
     }
 }`,
-    variables: {},
+    variables: { name: name },
   };
   const response = await postRequest({ url: url, body: body });
   if (response.ok) {
