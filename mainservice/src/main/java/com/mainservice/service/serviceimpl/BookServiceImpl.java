@@ -104,4 +104,10 @@ public class BookServiceImpl implements BookService {
         bookStatisticsForms.sort((o1, o2) -> o2.getCount() - o1.getCount());
         return bookStatisticsForms;
     }
+
+    @Override
+    public String getAuthorByBookName(String bookName) {
+        Book book = bookDao.getBookByName(bookName);
+        return book.getAuthor();
+    }
 }

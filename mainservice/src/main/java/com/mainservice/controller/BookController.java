@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -26,9 +27,15 @@ public class BookController {
     }
 
     @RequestMapping(value = "/api/book", method = RequestMethod.GET)
-    public List<Book> getBooksByTypeName(@RequestParam(value = "type") String typeName) {
-        log.info("type {}", typeName);
-        return bookService.getBookByTypeName(typeName);
+    public List<Book> getBooksByTypeName(@RequestParam(value = "type", required = false) String typeName, @RequestParam(value = "name", required = false) String bookName) {
+        if (typeName != null && !typeName.isEmpty()) {
+            log.info("type {}", typeName);
+            return bookService.getBookByTypeName(typeName);
+        }
+        log.info("book name {}", bookName);
+        var books = new ArrayList<Book>();
+        books.add(bookService.getBookByName(bookName));
+        return books;
     }
 
 

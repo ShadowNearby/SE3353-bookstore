@@ -28,4 +28,6 @@ public interface BookService {
     Integer subInventory(String name, Integer count);
 
     List<BookStatisticsForm> statistics(StatisticForm statisticForm);
+
+    String getAuthorByBookName(String bookName);
 }

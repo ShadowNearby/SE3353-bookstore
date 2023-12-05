@@ -3,6 +3,7 @@ import { Input, List, Spin } from "antd";
 import { Book } from "./Book";
 import { IBook } from "../../interface";
 import { getBooks, getBooksByType } from "../../service/get/getBook";
+import { getBookByName } from "../../service/get/getBookByName";
 
 export const BookList = (): JSX.Element => {
   const [books, setBooks] = useState<IBook[]>([]);
@@ -21,12 +22,15 @@ export const BookList = (): JSX.Element => {
     window.addEventListener("resize", () => handlePageResize());
     return window.removeEventListener("resize", () => handlePageResize());
   }, []);
-  const searchByName = (target: string) => {
-    let newList: IBook[] = [];
-    books.forEach((value: IBook) => {
-      if (value.name.match(target)) newList.push(value);
-    });
-    setShowedBooks(newList);
+  const searchByName = async (target: string) => {
+    if (target === "") {
+      const result = await getBooks();
+      setBooks(result);
+      setShowedBooks(result);
+      return;
+    }
+    const result = await getBookByName(target);
+    setShowedBooks(result);
   };
   const searchByType = async (target: string) => {
     if (target === "") {

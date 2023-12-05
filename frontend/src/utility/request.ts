@@ -8,7 +8,7 @@ interface IGetRequest {
 }
 
 export const requestUrl = "http://localhost:8080/";
-export const microServiceUrl = "http://localhost:8090/microservice/";
+export const microServiceUrl = "http://localhost:8081/microservice/";
 
 export const getRequest = async ({ url }: IGetRequest) =>
   await fetch(url, {
