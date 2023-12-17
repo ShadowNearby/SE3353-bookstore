@@ -63,11 +63,11 @@ public class BookTypeDaoImpl implements BookTypeDao {
 
     @Override
     public void init() {
-        log.info("init start");
-        bookTypeRepository.deleteAll();
+//        log.info("init start");
         if (!bookTypeRepository.findAll().isEmpty()) {
             return;
         }
+        bookTypeRepository.deleteAll();
         log.info("init start");
         BookType bookType1 = new BookType("小说");
         BookType bookType2 = new BookType("古典小说");
@@ -103,5 +103,11 @@ public class BookTypeDaoImpl implements BookTypeDao {
         bookTypeRepository.save(bookType2);
         bookTypeRepository.save(bookType3);
         bookTypeRepository.save(bookType4);
+
+        bookRepository.save(book1);
+        bookRepository.save(book2);
+        bookRepository.save(book3);
+        bookRepository.save(book4);
+        bookRepository.save(book5);
     }
 }
