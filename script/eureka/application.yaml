@@ -1,0 +1,14 @@
+server:
+  port:
+    8083
+spring:
+  application:
+    name: Eureka
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+    serviceUrl:
+      defaultZone: http://eureka:8083/eureka

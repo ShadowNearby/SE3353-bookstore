@@ -1,0 +1,30 @@
+server:
+  port: 8082
+  error:
+    include-message: always
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowCredentials: true
+            allowedOriginPatterns: "*"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+  application:
+    name: gateway
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: eureka
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://eureka:8083/eureka
+    eureka-service-url-poll-interval-seconds: 10

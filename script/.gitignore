@@ -1,0 +1,5 @@
+mysql/data
+redis/data
+mongodb/data/db
+neo4j/data
+/mysql/bookstore/

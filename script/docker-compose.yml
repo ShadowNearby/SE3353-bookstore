@@ -1,15 +1,56 @@
 version: '3'
 services:
-  mysql:
+  mysql-compose:
     image: mysql:latest
-    hostname: root
     environment:
       MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: bookstore
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 123456
     volumes:
       - ./mysql/data:/var/lib/mysql
     ports:
       - "3306:3306"
       - "33060:33060"
+
+  redis-compose:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis/data:/data
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+
+  kafka-compose:
+    image: wurstmeister/kafka
+    ports:
+      - "2181:2181"
+    depends_on:
+      - zookeeper-compose
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper-compose:2181
+      KAFKA_ADVERTISED_HOST_NAME: kafka-compose
+
+  zookeeper-compose:
+    image: zookeeper:latest
+    ports:
+      - "9092:9092"
+
+  mongodb-compose:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongodb/data/db:/data/db
+
+  neo4j-compose:
+    image: neo4j:latest
+    ports:
+      - "7473:7473"
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - ./neo4j/data:/data
 
   mainservice:
     build:
@@ -17,16 +58,23 @@ services:
       dockerfile: ../../../script/mainservice/Dockerfile
     depends_on:
       - eureka
+    volumes:
+      - ./mainservice/application.properties:/conf/application.properties
+      - ../mainservice/build/libs/mainservice-0.0.1-SNAPSHOT.jar:/app.jar
     ports:
       - "8080:8080"
+
   microservice:
     build:
       context: ../microservice/build/libs
       dockerfile: ../../../script/microservice/Dockerfile
     depends_on:
       - eureka
+    volumes:
+      - ./microservice/application.yaml:/conf/application.yaml
     ports:
       - "8081:8081"
+
   gateway:
     build:
       context: ../gateway/build/libs
@@ -35,13 +83,18 @@ services:
       - mainservice
       - microservice
       - eureka
+    volumes:
+      - ./gateway/application.yaml:/conf/application.yaml
     ports:
       - "8082:8082"
+
   eureka:
     build:
       context: ../eureka/build/libs
       dockerfile: ../../../script/eureka/Dockerfile
     depends_on:
-      - mysql
+      - mysql-compose
+    volumes:
+      - ./eureka/application.yaml:/conf/application.yaml
     ports:
       - "8083:8083"
