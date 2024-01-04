@@ -33,14 +33,15 @@ public class AssetsServiceImpl implements AssetsService {
         String uuid = UUID.randomUUID().toString();
         String fileName = uuid + fileSuffix;
         String base64 = Base64.getEncoder().encodeToString(file.getBytes());
-        imageDao.updateImage(new Image(fileName, base64));
+//        imageDao.updateImage(new Image(fileName, base64));
+        imageDao.updateImage(new Image(fileName, file.getBytes()));
         String responsePath = "http://localhost:" + Constant.PORT + "/assets/image/" + fileName;
         object.put("path", responsePath);
         return object;
     }
 
     @Override
-    public String imageGet(String fileName) {
+    public byte[] imageGet(String fileName) {
         return imageDao.getBase64ByName(fileName);
     }
 

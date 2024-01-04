@@ -17,9 +17,9 @@ public class Image {
     private String _id;
 
     private String name;
-    private String base64;
+    private byte[] base64;
 
-    public Image(String name, String base64) {
+    public Image(String name, byte[] base64) {
         this.name = name;
         this.base64 = base64;
     }

@@ -7,5 +7,5 @@ public interface ImageDao {
 
     void deleteImageByName(String name);
 
-    String getBase64ByName(String name);
+    byte[] getBase64ByName(String name);
 }

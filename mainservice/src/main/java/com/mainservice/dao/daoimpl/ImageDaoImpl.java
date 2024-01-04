@@ -24,8 +24,8 @@ public class ImageDaoImpl implements ImageDao {
     }
 
     @Override
-    public String getBase64ByName(String name) {
+    public byte[] getBase64ByName(String name) {
         var opt_image = imageRepository.findImageByName(name);
-        return opt_image.map(Image::getBase64).orElse("");
+        return opt_image.map(Image::getBase64).orElse(new byte[]{});
     }
 }

@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Base64;
 
 @RestController
 @Transactional
@@ -34,9 +33,9 @@ public class AssetsController {
     @RequestMapping(value = "/assets/image/{fileName}", method = RequestMethod.GET)
     public void imageGet(@PathVariable("fileName") String fileName, @NotNull HttpServletResponse response) throws IOException {
         log.info("get image {}", fileName);
-        String base64 = assetsService.imageGet(fileName);
+        byte[] base64 = assetsService.imageGet(fileName);
         OutputStream outputStream = response.getOutputStream();
-        outputStream.write(Base64.getDecoder().decode(base64.getBytes()));
+        outputStream.write(base64);
         response.setHeader("content-type", MediaTypeFactory.getMediaType(fileName).toString());
     }
 }

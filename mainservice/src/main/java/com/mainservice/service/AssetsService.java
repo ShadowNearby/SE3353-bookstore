@@ -8,6 +8,6 @@ import java.io.IOException;
 public interface AssetsService {
     JSONObject imageAdd(MultipartFile file) throws IOException;
 
-    String imageGet(String fileName);
+    byte[] imageGet(String fileName);
 
 }
