@@ -1,7 +1,7 @@
 package com.mainservice.controller;
 
 import com.mainservice.entity.Book;
-import com.mainservice.extern.MapReduceService;
+import com.mainservice.extern.impl.SparkMapReduceService;
 import com.mainservice.service.BookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,11 +15,11 @@ import java.util.List;
 @Transactional
 public class BookController {
     private final BookService bookService;
-    private final MapReduceService mapReduceService;
+    private final SparkMapReduceService mapReduceService;
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    public BookController(BookService bookService, MapReduceService mapReduceService) {
+    public BookController(BookService bookService, SparkMapReduceService mapReduceService) {
         this.bookService = bookService;
         this.mapReduceService = mapReduceService;
     }
@@ -58,7 +58,7 @@ public class BookController {
         return bookService.subInventory(name, count);
     }
 
-    @RequestMapping(value = "/api/book/mr", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/book/mr", method = RequestMethod.POST)
     public String MapReduce() {
         return mapReduceService.run();
     }

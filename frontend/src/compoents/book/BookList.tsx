@@ -36,6 +36,7 @@ export const BookList = (): JSX.Element => {
     if (target === "") {
       const books = await getBooks();
       setBooks(books);
+      setShowedBooks(books);
       return;
     }
     const books = await getBooksByType(target);
