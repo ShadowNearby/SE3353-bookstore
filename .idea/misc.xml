@@ -8,12 +8,14 @@
     <file type="web" url="file://$PROJECT_DIR$/mainservice" />
     <file type="web" url="file://$PROJECT_DIR$/microservice" />
     <file type="web" url="file://$PROJECT_DIR$/mr" />
+    <file type="web" url="file://$PROJECT_DIR$/spark" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/mr/pom.xml" />
+        <option value="$PROJECT_DIR$/spark/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

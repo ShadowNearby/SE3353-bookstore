@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Base64;
 import java.util.UUID;
 
 @Service
@@ -32,7 +31,6 @@ public class AssetsServiceImpl implements AssetsService {
         String fileSuffix = originalFilename.substring(originalFilename.lastIndexOf("."));
         String uuid = UUID.randomUUID().toString();
         String fileName = uuid + fileSuffix;
-        String base64 = Base64.getEncoder().encodeToString(file.getBytes());
 //        imageDao.updateImage(new Image(fileName, base64));
         imageDao.updateImage(new Image(fileName, file.getBytes()));
         String responsePath = "http://localhost:" + Constant.PORT + "/assets/image/" + fileName;

@@ -5,7 +5,5 @@ import com.mainservice.entity.Image;
 public interface ImageDao {
     void updateImage(Image image);
 
-    void deleteImageByName(String name);
-
     byte[] getBase64ByName(String name);
 }
